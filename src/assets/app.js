@@ -62,8 +62,8 @@ function startIntroSequence() {
 
   document.documentElement.classList.add("intro-active");
   let index = 0;
-  const stepMs = 1600;
-  const hideDelayMs = 900;
+  const stepMs = 2300;
+  const hideDelayMs = 1200;
 
   function showNext() {
     lines.forEach((line) => line.classList.remove("active"));

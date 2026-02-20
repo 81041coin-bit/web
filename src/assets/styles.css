@@ -71,7 +71,7 @@ body > * {
 .intro-line {
   position: absolute;
   max-width: min(960px, 86%);
-  font-size: clamp(22px, 3.2vw, 42px);
+  font-size: clamp(26px, 3.8vw, 48px);
   font-weight: 600;
   letter-spacing: 0.03em;
   line-height: 1.4;
@@ -89,7 +89,7 @@ body > * {
 }
 
 .intro-line.intro-final {
-  font-size: clamp(32px, 4.6vw, 64px);
+  font-size: clamp(38px, 5vw, 70px);
   text-shadow: 0 18px 50px rgba(79, 230, 210, 0.25);
 }
 
