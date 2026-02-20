@@ -45,6 +45,15 @@ function applyI18n() {
   });
 }
 
+function startPrologue() {
+  const prologue = document.querySelector(".prologue-cinematic");
+  if (!prologue) return;
+  prologue.classList.remove("prologue-start");
+  // Restart animation on language change
+  void prologue.offsetWidth;
+  prologue.classList.add("prologue-start");
+}
+
 function renderMermaid() {
   if (!window.mermaid) return;
   try {
@@ -66,6 +75,7 @@ async function detectLang() {
     try {
       await loadI18n(currentLang);
       applyI18n();
+      startPrologue();
       renderMermaid();
       return;
     } catch (_) {}
@@ -82,6 +92,7 @@ async function detectLang() {
   }
   await loadI18n(currentLang);
   applyI18n();
+  startPrologue();
   renderMermaid();
 }
 
@@ -94,6 +105,7 @@ function bindLangSwitch() {
       localStorage.setItem("lang", lang);
       await loadI18n(currentLang);
       applyI18n();
+      startPrologue();
       renderMermaid();
       if (document.getElementById("market-section")) {
         fetchMarket();
