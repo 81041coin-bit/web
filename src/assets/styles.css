@@ -61,6 +61,14 @@ header {
   font-size: 18px;
 }
 
+.logo img {
+  height: 42px;
+  width: 42px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
 nav {
   display: flex;
   align-items: center;
