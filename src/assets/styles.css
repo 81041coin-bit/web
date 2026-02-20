@@ -1,16 +1,18 @@
 :root {
-  --bg: #0b0f14;
-  --bg-2: #0f1620;
-  --card: #111a24;
-  --card-2: #0f1a26;
+  --bg: #0a0f16;
+  --bg-2: #0f1622;
+  --card: #111b28;
+  --card-2: #0e1a2a;
   --text: #e6eef7;
   --muted: #9bb0c6;
-  --accent: #5eead4;
+  --accent: #4fe6d2;
   --accent-2: #7aa2ff;
+  --accent-3: #ffb86b;
   --border: #1c2a3a;
-  --glow: rgba(94, 234, 212, 0.2);
-  --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  --radius: 14px;
+  --glow: rgba(79, 230, 210, 0.22);
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  --radius: 16px;
+  --grid: rgba(255, 255, 255, 0.03);
 }
 
 * { box-sizing: border-box; }
@@ -18,10 +20,30 @@
 html, body {
   margin: 0;
   padding: 0;
-  background: radial-gradient(1200px 600px at 15% 0%, #0f1b26 0%, #0b0f14 55%, #0a0d12 100%);
+  background: radial-gradient(1200px 800px at 15% -10%, rgba(94, 234, 212, 0.2), transparent 55%),
+              radial-gradient(800px 600px at 85% 10%, rgba(122, 162, 255, 0.18), transparent 60%),
+              linear-gradient(180deg, #0a0f16 0%, #0b111b 100%);
   color: var(--text);
-  font-family: "Space Grotesk", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  font-family: "Space Grotesk", "Sora", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   line-height: 1.6;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  opacity: 0.6;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 a {
@@ -42,7 +64,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(11, 15, 20, 0.85);
+  background: rgba(10, 15, 22, 0.8);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
 }
@@ -78,6 +100,19 @@ nav {
   color: var(--muted);
 }
 
+nav a {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+nav a:hover {
+  border-color: rgba(79, 230, 210, 0.45);
+  background: rgba(79, 230, 210, 0.08);
+  color: var(--text);
+}
+
 .lang-switch {
   display: flex;
   gap: 8px;
@@ -106,6 +141,7 @@ nav {
 .hero h1 {
   font-size: clamp(32px, 5vw, 56px);
   margin: 0 0 10px;
+  letter-spacing: 0.01em;
 }
 
 .hero p {
@@ -114,8 +150,29 @@ nav {
   font-size: 18px;
 }
 
+.hero .container {
+  background: linear-gradient(120deg, rgba(79, 230, 210, 0.08), rgba(122, 162, 255, 0.08));
+  border: 1px solid rgba(79, 230, 210, 0.18);
+  border-radius: 20px;
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+
 .section {
   padding: 48px 0;
+}
+
+.section::before {
+  content: "";
+  display: block;
+  height: 1px;
+  margin-bottom: 28px;
+  background: linear-gradient(90deg, transparent 0%, rgba(79, 230, 210, 0.35) 40%, transparent 100%);
+  opacity: 0.6;
+}
+
+.hero + .section::before {
+  display: none;
 }
 
 .section-title {
@@ -129,6 +186,13 @@ nav {
   border-radius: var(--radius);
   padding: 22px;
   box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(79, 230, 210, 0.4);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
 }
 
 .grid {
@@ -147,7 +211,7 @@ nav {
   border-radius: 999px;
   border: 1px solid var(--border);
   color: var(--text);
-  background: linear-gradient(135deg, rgba(94, 234, 212, 0.15), rgba(122, 162, 255, 0.15));
+  background: linear-gradient(135deg, rgba(79, 230, 210, 0.22), rgba(122, 162, 255, 0.18));
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -163,6 +227,10 @@ nav {
   gap: 8px;
   font-size: 16px;
   color: var(--muted);
+  background: rgba(15, 26, 38, 0.6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
 }
 
 .fade-line {
@@ -199,11 +267,34 @@ nav {
 }
 
 pre.mermaid {
-  background: rgba(15, 26, 38, 0.6);
+  background: rgba(12, 20, 32, 0.7);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 18px;
   overflow-x: auto;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  background: rgba(8, 12, 18, 0.8);
+}
+
+footer .logo {
+  font-size: 16px;
+}
+
+/* Keep support/donate section more neutral */
+.support-section .card {
+  background: linear-gradient(180deg, var(--card) 0%, var(--card-2) 100%);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+  transform: none;
+}
+
+.support-section .card:hover {
+  transform: none;
+  border-color: var(--border);
+  box-shadow: var(--shadow);
 }
 
 @media (max-width: 900px) {
