@@ -54,6 +54,48 @@ function startPrologue() {
   prologue.classList.add("prologue-start");
 }
 
+function startIntroSequence() {
+  const intro = document.getElementById("intro");
+  if (!intro) return;
+  const lines = Array.from(intro.querySelectorAll(".intro-line"));
+  if (!lines.length) return;
+
+  document.documentElement.classList.add("intro-active");
+  let index = 0;
+  const stepMs = 1600;
+  const hideDelayMs = 900;
+
+  function showNext() {
+    lines.forEach((line) => line.classList.remove("active"));
+    const current = lines[index];
+    if (current) {
+      current.classList.add("active");
+      if (current.classList.contains("intro-reveal")) {
+        intro.classList.add("reveal");
+      }
+    }
+    index += 1;
+
+    if (index < lines.length) {
+      setTimeout(showNext, stepMs);
+    } else {
+      setTimeout(() => {
+        intro.classList.add("hidden");
+        setTimeout(() => {
+          intro.remove();
+          document.documentElement.classList.remove("intro-active");
+          const vision = document.getElementById("vision");
+          if (vision) {
+            vision.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, hideDelayMs);
+      }, stepMs);
+    }
+  }
+
+  showNext();
+}
+
 function renderMermaid() {
   if (!window.mermaid) return;
   try {
@@ -76,6 +118,7 @@ async function detectLang() {
       await loadI18n(currentLang);
       applyI18n();
       startPrologue();
+      startIntroSequence();
       renderMermaid();
       return;
     } catch (_) {}
@@ -93,6 +136,7 @@ async function detectLang() {
   await loadI18n(currentLang);
   applyI18n();
   startPrologue();
+  startIntroSequence();
   renderMermaid();
 }
 
@@ -106,6 +150,7 @@ function bindLangSwitch() {
       await loadI18n(currentLang);
       applyI18n();
       startPrologue();
+      startIntroSequence();
       renderMermaid();
       if (document.getElementById("market-section")) {
         fetchMarket();

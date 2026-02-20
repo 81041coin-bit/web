@@ -116,5 +116,16 @@
   "diagram.otherIncomeDesc": "除手续费之外的收入",
   "diagram.pool": "[分配资金池] 10%",
   "diagram.poolDesc": "用于分配而累计的余额",
-  "diagram.mermaid": "graph LR\nA[\"👥 购买者\"] --> B[\"🛒 [买入]\"]\nB --> C[\"💰 [手续费]<br>按交易产生的手续费\"]\nC --> D[\"🧾 [最终收益]\"]\nE[\"💰 [杂项收入]<br>除手续费之外的收入\"] --> D\nD --> F[\"❤️ [社会贡献] 50%<br>受害者支援／事故与犯罪预防\"]\nD --> G[\"⚙️ [运营费用] 40%<br>开发／运营／安全\"]\nD --> H[\"💵 [分配资金池] 10%<br>用于分配而累计的余额\"]\nclassDef square fill:#111a24,stroke:#1c2a3a,color:#e6eef7,rx:0,ry:0\nclass A,B,C,D,E,F,G,H square\n"
+  "diagram.mermaid": "graph LR\nA[\"👥 购买者\"] --> B[\"🛒 [买入]\"]\nB --> C[\"💰 [手续费]<br>按交易产生的手续费\"]\nC --> D[\"🧾 [最终收益]\"]\nE[\"💰 [杂项收入]<br>除手续费之外的收入\"] --> D\nD --> F[\"❤️ [社会贡献] 50%<br>受害者支援／事故与犯罪预防\"]\nD --> G[\"⚙️ [运营费用] 40%<br>开发／运营／安全\"]\nD --> H[\"💵 [分配资金池] 10%<br>用于分配而累计的余额\"]\nclassDef square fill:#111a24,stroke:#1c2a3a,color:#e6eef7,rx:0,ry:0\nclass A,B,C,D,E,F,G,H square\n",
+  "intro.l1": "あるスペースの配信中、それは突然起きた。",
+  "intro.l2": "ハッキング",
+  "intro.l3": "バーン処理を狙った、悪意ある攻撃。",
+  "intro.l4": "一瞬で信頼は崩れた。",
+  "intro.l5": "その後も、旧開発者のレスポンスは遅れ続け、連絡は途絶え、業務は停滞した。全ての連携、協力、コラボが白紙になった。",
+  "intro.l6": "しかし...",
+  "intro.l7": "コミュニティのメンバーがプロジェクトを受け継いだ。",
+  "intro.l8": "このプロジェクトには守るべきものがある",
+  "intro.l9": "これは単なるミームコインではない。",
+  "intro.l10": "社会を変える試みだ。",
+  "intro.l11": "From Meme to Movement"
 }
