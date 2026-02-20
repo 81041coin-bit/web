@@ -225,17 +225,53 @@ nav a:hover {
 .prologue {
   display: grid;
   gap: 8px;
-  font-size: 16px;
+  font-size: clamp(18px, 2.2vw, 22px);
   color: var(--muted);
-  background: rgba(15, 26, 38, 0.6);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px;
+  padding: 8px 0 8px 28px;
+  position: relative;
 }
 
 .fade-line {
   opacity: 0;
   animation: fadeIn 0.8s ease forwards;
+  letter-spacing: 0.02em;
+}
+
+.prologue-creative::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(79, 230, 210, 0.9), rgba(122, 162, 255, 0.2));
+  box-shadow: 0 0 14px rgba(79, 230, 210, 0.5);
+}
+
+.prologue-creative::after {
+  content: "";
+  position: absolute;
+  inset: -10px -6px -10px -6px;
+  background: radial-gradient(220px 120px at 0% 0%, rgba(79, 230, 210, 0.12), transparent 70%);
+  z-index: -1;
+  border-radius: 18px;
+}
+
+.vision-block {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 10px 0 0;
+}
+
+.vision-block .section-title {
+  font-size: clamp(22px, 2.6vw, 28px);
+}
+
+.vision-block details {
+  margin-top: 12px;
+  border-left: 2px solid rgba(122, 162, 255, 0.45);
+  padding-left: 16px;
 }
 
 .fade-line:nth-child(1) { animation-delay: 0.1s; }
