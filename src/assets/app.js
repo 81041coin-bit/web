@@ -64,8 +64,32 @@ function startIntroSequence() {
   let index = 0;
   const hideDelayMs = 1200;
   const stepMs = 3200;
+  let timerId = null;
+  let cancelled = false;
+  const skipBtn = intro.querySelector(".intro-skip");
+
+  function finishIntro() {
+    intro.classList.add("hidden");
+    if (timerId) clearTimeout(timerId);
+    setTimeout(() => {
+      intro.remove();
+      document.documentElement.classList.remove("intro-active");
+      const vision = document.getElementById("vision");
+      if (vision) {
+        vision.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, hideDelayMs);
+  }
+
+  if (skipBtn) {
+    skipBtn.addEventListener("click", () => {
+      cancelled = true;
+      finishIntro();
+    });
+  }
 
   function showNext() {
+    if (cancelled) return;
     lines.forEach((line) => line.classList.remove("active"));
     const current = lines[index];
     if (current) {
@@ -77,18 +101,13 @@ function startIntroSequence() {
     index += 1;
 
     if (index < lines.length) {
-      setTimeout(showNext, stepMs);
+      const lineNumber = index; // 1-based of the next line to show
+      const fastRange = lineNumber >= 2 && lineNumber <= 4;
+      const delay = fastRange ? 2200 : stepMs;
+      timerId = setTimeout(showNext, delay);
     } else {
-      setTimeout(() => {
-        intro.classList.add("hidden");
-        setTimeout(() => {
-          intro.remove();
-          document.documentElement.classList.remove("intro-active");
-          const vision = document.getElementById("vision");
-          if (vision) {
-            vision.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        }, hideDelayMs);
+      timerId = setTimeout(() => {
+        finishIntro();
       }, stepMs);
     }
   }
