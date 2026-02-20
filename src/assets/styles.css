@@ -198,70 +198,12 @@ nav {
   color: var(--muted);
 }
 
-.diagram {
-  font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
-  font-size: 13px;
-  white-space: pre-wrap;
-  color: var(--muted);
-}
-
-.diagram-structure {
-  display: grid;
-  gap: 18px;
-  margin-top: 12px;
-}
-
-.diagram-node {
-  background: rgba(17, 26, 36, 0.7);
+pre.mermaid {
+  background: rgba(15, 26, 38, 0.6);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 12px 14px;
-  box-shadow: var(--shadow);
-}
-
-.diagram-line {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.diagram-title {
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.diagram-pair {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: rgba(94, 234, 212, 0.1);
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.diagram-note {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.diagram-arrow {
-  text-align: center;
-  color: var(--accent);
-  font-size: 20px;
-  font-weight: 600;
+  padding: 18px;
+  overflow-x: auto;
 }
 
 @media (max-width: 900px) {

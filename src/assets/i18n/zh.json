@@ -29,7 +29,7 @@
   "prologue.l7": "这个项目有必须守护的东西。这不仅仅是一枚迷因币，而是一场改变社会的尝试。",
   "hero.title": "从迷因币到社会行动",
   "hero.subtitle": "我们将加密资产的传播力转化为事故/犯罪预防与受害者支援。我们把50%收益用于社会",
-  "diagram.title": "収益構造と使い道の内容（図で可視化）",
+  "diagram.title": "收益结构与用途（图示）",
   "diagram.body": "购买者\n[买入] →← [卖出]　　　　　　　　　　　　　　 [社会贡献] 50%\n　　　　↓　　　　　　　　　　　　　　　　  ↗  受害者支援／事故与犯罪预防\n　　 [手续费] →　　　 [最终收益]　　　　　　→  [运营费用] 40%\n按交易产生的手续费　　　　　　　　　　　　　 ↘  开发／运营／安全\n[杂项收入] ↗　　　　　　　　　　　　　　　　 [分配资金池] 10%\n除手续费之外的收入　　　　　　　　　　　　　  用于分配而累计的余额",
   "market.title": "实时数据",
   "market.chart.title": "リアルタイムチャート（技術設計）",
@@ -115,5 +115,6 @@
   "diagram.otherIncome": "[杂项收入]",
   "diagram.otherIncomeDesc": "除手续费之外的收入",
   "diagram.pool": "[分配资金池] 10%",
-  "diagram.poolDesc": "用于分配而累计的余额"
+  "diagram.poolDesc": "用于分配而累计的余额",
+  "diagram.mermaid": "graph LR\nA[\"👥 购买者\"] --> B[\"🛒 [买入]\"]\nB --> C[\"💰 [手续费]<br>按交易产生的手续费\"]\nC --> D[\"🧾 [最终收益]\"]\nE[\"💰 [杂项收入]<br>除手续费之外的收入\"] --> D\nD --> F[\"❤️ [社会贡献] 50%<br>受害者支援／事故与犯罪预防\"]\nD --> G[\"⚙️ [运营费用] 40%<br>开发／运营／安全\"]\nD --> H[\"💵 [分配资金池] 10%<br>用于分配而累计的余额\"]\nclassDef square fill:#111a24,stroke:#1c2a3a,color:#e6eef7,rx:0,ry:0\nclass A,B,C,D,E,F,G,H square\n"
 }

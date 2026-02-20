@@ -115,5 +115,6 @@
   "diagram.otherIncome": "[雑益]",
   "diagram.otherIncomeDesc": "手数料以外の収入",
   "diagram.pool": "[分配プール] 10%",
-  "diagram.poolDesc": "分配のために積み立てる残高"
+  "diagram.poolDesc": "分配のために積み立てる残高",
+  "diagram.mermaid": "graph LR\nA[\"👥 購入者\"] --> B[\"🛒 [買い]\"]\nB --> C[\"💰 [手数料]<br>取引に応じて発生\"]\nC --> D[\"🧾 [最終収益]\"]\nE[\"💰 [雑益]<br>手数料以外の収入\"] --> D\nD --> F[\"❤️ [社会貢献] 50%<br>被害者支援／事故・犯罪防止\"]\nD --> G[\"⚙️ [運営費用] 40%<br>開発・運営・セキュリティ\"]\nD --> H[\"💵 [分配プール] 10%<br>分配のために積み立てる残高\"]\nclassDef square fill:#111a24,stroke:#1c2a3a,color:#e6eef7,rx:0,ry:0\nclass A,B,C,D,E,F,G,H square\n"
 }

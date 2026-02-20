@@ -29,7 +29,7 @@
   "prologue.l7": "There is something this project must protect.This isn’t just a meme coin. It’s an attempt to change society.",
   "hero.title": "From Meme to Movement",
   "hero.subtitle": "We turn crypto’s reach into crime/accident prevention and victim support.We allocate 50% of revenue to social impact",
-  "diagram.title": "収益構造と使い道の内容（図で可視化）",
+  "diagram.title": "Revenue Structure and Use of Funds",
   "diagram.body": "Buyers\n[Buy]  →← [Sell]　　　　　　　　　　　　　　[Social Impact] 50%\n　　　　↓　　　　　　　　　　　　　　　　 ↗  Victim support / accident & crime prevention\n　　 [Fees]  →　　　 [Net Revenue]　　　　　→  [Operations] 40%\nFees generated per trade　　　　　　　　　　  ↘  Development / operations / security\n[Other Income] ↗　　　　　　　　　　　　　　　 [Distribution Pool] 10%\nIncome other than fees　　　　　　　　　　　　  Balance reserved for future distributions",
   "market.title": "Live Metrics",
   "market.chart.title": "リアルタイムチャート（技術設計）",
@@ -115,5 +115,6 @@
   "diagram.otherIncome": "[Other Income]",
   "diagram.otherIncomeDesc": "Income other than fees",
   "diagram.pool": "[Distribution Pool] 10%",
-  "diagram.poolDesc": "Balance reserved for future distributions"
+  "diagram.poolDesc": "Balance reserved for future distributions",
+  "diagram.mermaid": "graph LR\nA[\"👥 Buyers\"] --> B[\"🛒 [Buy]\"]\nB --> C[\"💰 [Fees]<br>Fees generated per trade\"]\nC --> D[\"🧾 [Net Revenue]\"]\nE[\"💰 [Other Income]<br>Income other than fees\"] --> D\nD --> F[\"❤️ [Social Impact] 50%<br>Victim support / accident & crime prevention\"]\nD --> G[\"⚙️ [Operations] 40%<br>Development / operations / security\"]\nD --> H[\"💵 [Distribution Pool] 10%<br>Balance reserved for future distributions\"]\nclassDef square fill:#111a24,stroke:#1c2a3a,color:#e6eef7,rx:0,ry:0\nclass A,B,C,D,E,F,G,H square\n"
 }

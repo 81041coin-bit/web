@@ -45,6 +45,14 @@ function applyI18n() {
   });
 }
 
+function renderMermaid() {
+  if (!window.mermaid) return;
+  try {
+    window.mermaid.initialize({ startOnLoad: false });
+    window.mermaid.run({ querySelector: ".mermaid" });
+  } catch (_) {}
+}
+
 async function loadI18n(lang) {
   const res = await fetch(`/assets/i18n/${lang}.json`);
   if (!res.ok) throw new Error("i18n");
@@ -58,6 +66,7 @@ async function detectLang() {
     try {
       await loadI18n(currentLang);
       applyI18n();
+      renderMermaid();
       return;
     } catch (_) {}
   }
@@ -73,6 +82,7 @@ async function detectLang() {
   }
   await loadI18n(currentLang);
   applyI18n();
+  renderMermaid();
 }
 
 function bindLangSwitch() {
@@ -84,6 +94,7 @@ function bindLangSwitch() {
       localStorage.setItem("lang", lang);
       await loadI18n(currentLang);
       applyI18n();
+      renderMermaid();
       if (document.getElementById("market-section")) {
         fetchMarket();
       }
