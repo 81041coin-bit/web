@@ -420,10 +420,28 @@ nav a:hover {
   font-size: clamp(22px, 2.6vw, 28px);
 }
 
-.vision-block details {
+.vision-sections {
+  display: grid;
+  gap: 24px;
   margin-top: 12px;
+}
+
+.vision-section {
   border-left: 2px solid rgba(122, 162, 255, 0.45);
   padding-left: 16px;
+}
+
+.vision-section .section-title {
+  margin-bottom: 10px;
+}
+
+.vision-section {
+  font-size: clamp(16px, 2.1vw, 20px);
+  color: #eaf3ff;
+}
+
+.vision-section strong {
+  font-weight: 600;
 }
 
 .fade-line:nth-child(1) { animation-delay: 0.1s; }
