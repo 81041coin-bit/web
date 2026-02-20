@@ -62,7 +62,58 @@
     <section class="section">
       <div class="container card">
         <div class="section-title" data-i18n="diagram.title"></div>
-        <div class="diagram" data-i18n="diagram.body"></div>
+        <div class="diagram-structure">
+          <div class="diagram-row">
+            <div class="diagram-node diagram-buyers">
+              <div class="diagram-title" data-i18n="diagram.buyers"></div>
+              <div class="diagram-pair">
+                <span class="chip" data-i18n="diagram.buy"></span>
+                <span class="chip" data-i18n="diagram.sell"></span>
+              </div>
+            </div>
+            <div class="diagram-arrow">&darr;</div>
+            <div class="diagram-node diagram-fees">
+              <div class="chip" data-i18n="diagram.fees"></div>
+              <div class="diagram-note" data-i18n="diagram.feesDesc"></div>
+            </div>
+            <div class="diagram-arrow">&rarr;</div>
+            <div class="diagram-node diagram-net">
+              <div class="chip" data-i18n="diagram.netRevenue"></div>
+            </div>
+            <div class="diagram-arrow">&rarr;</div>
+            <div class="diagram-node diagram-social">
+              <div class="chip" data-i18n="diagram.socialImpact"></div>
+              <div class="diagram-note" data-i18n="diagram.socialImpactDesc"></div>
+            </div>
+          </div>
+          <div class="diagram-row">
+            <div class="diagram-node diagram-other">
+              <div class="chip" data-i18n="diagram.otherIncome"></div>
+              <div class="diagram-note" data-i18n="diagram.otherIncomeDesc"></div>
+            </div>
+            <div class="diagram-arrow">&nearr;</div>
+            <div class="diagram-node diagram-net">
+              <div class="chip" data-i18n="diagram.netRevenue"></div>
+            </div>
+            <div class="diagram-arrow">&rarr;</div>
+            <div class="diagram-node diagram-ops">
+              <div class="chip" data-i18n="diagram.operations"></div>
+              <div class="diagram-note" data-i18n="diagram.operationsDesc"></div>
+            </div>
+          </div>
+          <div class="diagram-row">
+            <div class="diagram-spacer"></div>
+            <div class="diagram-arrow">&nearr;</div>
+            <div class="diagram-node diagram-net">
+              <div class="chip" data-i18n="diagram.netRevenue"></div>
+            </div>
+            <div class="diagram-arrow">&rarr;</div>
+            <div class="diagram-node diagram-pool">
+              <div class="chip" data-i18n="diagram.pool"></div>
+              <div class="diagram-note" data-i18n="diagram.poolDesc"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

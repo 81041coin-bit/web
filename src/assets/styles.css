@@ -205,6 +205,80 @@ nav {
   color: var(--muted);
 }
 
+.diagram-structure {
+  display: grid;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.diagram-row {
+  display: grid;
+  grid-template-columns: 1.4fr 40px 1fr 40px 1.2fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.diagram-node {
+  background: rgba(17, 26, 36, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: var(--shadow);
+}
+
+.diagram-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.diagram-pair {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(94, 234, 212, 0.1);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.diagram-note {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.diagram-arrow {
+  text-align: center;
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.diagram-spacer {
+  min-height: 1px;
+}
+
+@media (max-width: 900px) {
+  .diagram-row {
+    grid-template-columns: 1fr;
+  }
+
+  .diagram-arrow,
+  .diagram-spacer {
+    display: none;
+  }
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
