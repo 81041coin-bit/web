@@ -207,15 +207,8 @@ nav {
 
 .diagram-structure {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   margin-top: 12px;
-}
-
-.diagram-row {
-  display: grid;
-  grid-template-columns: 1.4fr 40px 1fr 40px 1.2fr;
-  align-items: center;
-  gap: 12px;
 }
 
 .diagram-node {
@@ -224,6 +217,13 @@ nav {
   border-radius: 12px;
   padding: 12px 14px;
   box-shadow: var(--shadow);
+}
+
+.diagram-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .diagram-title {
@@ -260,23 +260,13 @@ nav {
 .diagram-arrow {
   text-align: center;
   color: var(--accent);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
 }
 
-.diagram-spacer {
-  min-height: 1px;
-}
-
 @media (max-width: 900px) {
-  .diagram-row {
-    grid-template-columns: 1fr;
-  }
-
-  .diagram-arrow,
-  .diagram-spacer {
-    display: none;
-  }
+  .diagram-line { gap: 10px; }
+  .diagram-arrow { font-size: 18px; }
 }
 
 .table {
