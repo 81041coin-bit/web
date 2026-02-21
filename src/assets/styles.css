@@ -604,6 +604,40 @@ pre.mermaid {
   font-size: 12px;
 }
 
+.trade-visual .section-title {
+  margin-bottom: 16px;
+}
+
+.trade-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.trade-card {
+  margin: 0;
+  background: rgba(12, 20, 32, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 0;
+}
+
+.trade-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.trade-card figcaption {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
 .pool-muted {
   color: var(--muted);
   font-size: 14px;
