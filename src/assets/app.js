@@ -57,6 +57,13 @@ function startPrologue() {
 function startIntroSequence() {
   const intro = document.getElementById("intro");
   if (!intro) return;
+  const params = new URLSearchParams(window.location.search);
+  const enableIntro = params.get("intro") === "1";
+  if (!enableIntro) {
+    intro.remove();
+    return;
+  }
+  intro.classList.add("enabled");
   const lines = Array.from(intro.querySelectorAll(".intro-line"));
   if (!lines.length) return;
 
@@ -302,6 +309,23 @@ async function fetchSupply() {
 window.addEventListener("DOMContentLoaded", async () => {
   await detectLang();
   bindLangSwitch();
+  document.querySelectorAll("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const value = btn.getAttribute("data-copy") || "";
+      const status = btn.closest(".copy-row")?.querySelector(".copy-status");
+      try {
+        await navigator.clipboard.writeText(value);
+        if (status) status.textContent = I18N["howto.copied"] || missingKey("howto.copied");
+      } catch (_) {
+        const input = btn.closest(".copy-row")?.querySelector("input");
+        if (input) {
+          input.select();
+          document.execCommand("copy");
+          if (status) status.textContent = I18N["howto.copied"] || missingKey("howto.copied");
+        }
+      }
+    });
+  });
 
   if (document.getElementById("market-section")) {
     fetchMarket();

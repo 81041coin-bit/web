@@ -145,5 +145,9 @@
   "pool.metric.amount": "保管中の81041残高",
   "pool.metric.usd": "分配金（USD）",
   "pool.metric.updated": "最終更新",
-  "pool.usdPlaceholder": "—$"
+  "pool.usdPlaceholder": "—$",
+  "howto.caLabel": "CAをコピーして購入準備",
+  "howto.copy": "コピー",
+  "howto.copied": "コピーしました",
+  "howto.copyHint": "ボタンを押すとコピーされます。"
 }

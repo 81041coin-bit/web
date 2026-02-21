@@ -145,5 +145,9 @@
   "pool.metric.amount": "保管中的81041余额",
   "pool.metric.usd": "分配金（USD）",
   "pool.metric.updated": "最后更新",
-  "pool.usdPlaceholder": "—$"
+  "pool.usdPlaceholder": "—$",
+  "howto.caLabel": "复制CA以准备购买",
+  "howto.copy": "复制",
+  "howto.copied": "已复制",
+  "howto.copyHint": "点击即可复制。"
 }

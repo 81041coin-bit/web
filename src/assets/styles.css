@@ -54,13 +54,17 @@ body > * {
   position: fixed;
   inset: 0;
   background: #05070b;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   text-align: center;
   z-index: 9999;
   transition: opacity 1.2s ease;
   opacity: 1;
+}
+
+.intro.enabled {
+  display: flex;
 }
 
 .intro.hidden {
@@ -536,6 +540,34 @@ pre.mermaid {
 .pool-value {
   font-size: clamp(32px, 4vw, 48px);
   font-weight: 700;
+}
+
+.copy-row {
+  margin-top: 14px;
+  display: grid;
+  gap: 8px;
+}
+
+.copy-box {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.copy-box input {
+  flex: 1 1 320px;
+  background: rgba(12, 20, 32, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.copy-status {
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .pool-muted {
