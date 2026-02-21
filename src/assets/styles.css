@@ -468,6 +468,23 @@ pre.mermaid {
   overflow-x: auto;
 }
 
+.diagram-image {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(12, 20, 32, 0.6);
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.diagram-image img {
+  width: 100%;
+  max-width: 960px;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+}
+
 footer {
   border-top: 1px solid var(--border);
   background: rgba(8, 12, 18, 0.8);
