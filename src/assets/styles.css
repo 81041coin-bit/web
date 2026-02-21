@@ -328,7 +328,7 @@ nav a:hover {
 .prologue-cinematic {
   min-height: clamp(200px, 26vw, 360px);
   padding: 20px 0;
-  display: grid;
+  display: block;
   gap: 14px;
   text-align: center;
   position: relative;
@@ -355,12 +355,14 @@ nav a:hover {
 }
 
 .prologue-cinematic .fade-line {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   opacity: 0;
-  transform: translateY(18px);
-  filter: blur(1px);
-  animation: lineIn 0.8s ease forwards;
+  transform: translateY(10px);
   font-size: clamp(22px, 3vw, 40px);
   font-weight: 600;
   line-height: 1.35;
@@ -369,38 +371,30 @@ nav a:hover {
   text-shadow: 0 14px 40px rgba(79, 230, 210, 0.15);
 }
 
-.prologue-cinematic .fade-line.typed {
-  animation: typeReveal 1.8s steps(28, end) forwards;
-  overflow: hidden;
-  white-space: nowrap;
-  border-right: 2px solid rgba(255, 255, 255, 0.7);
-  padding-right: 6px;
-  filter: none;
-  transform: none;
+.prologue-start .fade-line:nth-child(1) { animation: cinematicLine 3.2s ease forwards; animation-delay: 0s; }
+.prologue-start .fade-line:nth-child(2) { animation: cinematicLine 3.2s ease forwards; animation-delay: 2.8s; }
+.prologue-start .fade-line:nth-child(3) { animation: cinematicLine 3.2s ease forwards; animation-delay: 5.6s; }
+.prologue-start .fade-line:nth-child(4) { animation: cinematicLine 3.2s ease forwards; animation-delay: 8.4s; }
+.prologue-start .fade-line:nth-child(5) { animation: cinematicLine 3.2s ease forwards; animation-delay: 11.2s; }
+.prologue-start .fade-line:nth-child(6) { animation: cinematicLine 3.2s ease forwards; animation-delay: 14s; }
+.prologue-start .fade-line:nth-child(7) { animation: cinematicLine 3.2s ease forwards; animation-delay: 16.8s; }
+.prologue-start .fade-line:nth-child(8) { animation: cinematicLine 3.2s ease forwards; animation-delay: 19.6s; }
+.prologue-start .fade-line:nth-child(9) { animation: cinematicLine 3.2s ease forwards; animation-delay: 22.4s; }
+.prologue-start .fade-line:nth-child(10) { animation: cinematicLine 3.2s ease forwards; animation-delay: 25.2s; }
+.prologue-start .fade-line:nth-child(11) { animation: cinematicLine 3.2s ease forwards; animation-delay: 28s; }
+.prologue-start .fade-line:nth-child(12) { animation: cinematicHold 3.6s ease forwards; animation-delay: 30.8s; }
+
+@keyframes cinematicLine {
+  0% { opacity: 0; transform: translateY(10px); }
+  20% { opacity: 1; transform: translateY(0); }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-6px); }
 }
 
-.prologue-start .fade-line:nth-child(1) { animation-delay: 0.2s; }
-.prologue-start .fade-line:nth-child(2) { animation-delay: 1.4s; }
-.prologue-start .fade-line:nth-child(3) { animation-delay: 2.4s; }
-.prologue-start .fade-line:nth-child(4) { animation-delay: 4s; }
-.prologue-start .fade-line:nth-child(5) { animation-delay: 5.6s; }
-.prologue-start .fade-line:nth-child(6) { animation-delay: 7.2s; }
-.prologue-start .fade-line:nth-child(7) { animation-delay: 8.8s; }
-.prologue-start .fade-line:nth-child(8) { animation-delay: 10.2s; }
-.prologue-start .fade-line:nth-child(9) { animation-delay: 11.6s; }
-.prologue-start .fade-line:nth-child(10) { animation-delay: 13s; }
-.prologue-start .fade-line:nth-child(11) { animation-delay: 14.4s; }
-.prologue-start .fade-line:nth-child(12) { animation-delay: 15.8s; }
-
-@keyframes lineIn {
-  0% { opacity: 0; transform: translateY(18px); filter: blur(2px); }
-  70% { opacity: 1; transform: translateY(0); filter: blur(0); }
+@keyframes cinematicHold {
+  0% { opacity: 0; transform: translateY(10px); }
+  20% { opacity: 1; transform: translateY(0); }
   100% { opacity: 1; }
-}
-
-@keyframes typeReveal {
-  0% { opacity: 1; width: 0; }
-  100% { opacity: 1; width: 100%; }
 }
 
 .prologue-cinematic .prologue-final {
