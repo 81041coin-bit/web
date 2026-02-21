@@ -632,6 +632,45 @@ pre.mermaid {
   letter-spacing: 0.03em;
 }
 
+.trade-steps {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.trade-step {
+  background: rgba(12, 20, 32, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+
+.trade-step h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.trade-step .step-body {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.trade-step-images {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.trade-step-images img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(12, 20, 32, 0.6);
+}
+
 .pool-muted {
   color: var(--muted);
   font-size: 14px;

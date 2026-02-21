@@ -122,6 +122,53 @@ function startIntroSequence() {
   showNext();
 }
 
+function buildTradeSteps() {
+  const source = document.getElementById("trade-body-source");
+  const stepsEl = document.getElementById("trade-steps");
+  const introEl = document.getElementById("trade-intro");
+  if (!source || !stepsEl || !introEl) return;
+
+  const html = source.innerHTML || "";
+  const lines = html.split("<br>");
+  const stepRegex = /(STEP\\s*\\d+|【STEP\\s*\\d+】)/i;
+
+  let current = null;
+  const steps = [];
+  const intro = [];
+
+  lines.forEach((line) => {
+    const cleaned = line.trim();
+    if (!cleaned) return;
+    if (stepRegex.test(cleaned)) {
+      current = { title: cleaned.replace(/━+/g, "").trim(), body: [] };
+      steps.push(current);
+    } else if (current) {
+      current.body.push(cleaned);
+    } else {
+      intro.push(cleaned);
+    }
+  });
+
+  introEl.innerHTML = `<div class="step-body">${intro.join("<br>")}</div>`;
+  stepsEl.innerHTML = steps.map((step) => {
+    const stepMatch = step.title.match(/STEP\\s*(\\d+)/i);
+    const stepNum = stepMatch ? stepMatch[1] : null;
+    const imageMap = {
+      "3": ["/assets/img/step3.jpeg"],
+      "4": ["/assets/img/step4.jpeg", "/assets/img/step4-2.jpeg"],
+      "5": ["/assets/img/step5.jpeg"],
+      "7": ["/assets/img/step7-1.jpeg", "/assets/img/step7-2.jpeg"],
+      "8": ["/assets/img/step8-1.jpeg"],
+      "9": ["/assets/img/step9-1.jpeg"]
+    };
+    const images = stepNum && imageMap[stepNum] ? imageMap[stepNum] : [];
+    const imagesHtml = images.length
+      ? `<div class="trade-step-images">${images.map((src) => `<img src="${src}" alt="${step.title}">`).join("")}</div>`
+      : "";
+    return `<div class="trade-step"><h3>${step.title}</h3><div class="step-body">${step.body.join("<br>")}</div>${imagesHtml}</div>`;
+  }).join("");
+}
+
 function renderMermaid() {
   if (!window.mermaid) return;
   try {
@@ -163,6 +210,7 @@ async function detectLang() {
   applyI18n();
   startPrologue();
   startIntroSequence();
+  buildTradeSteps();
   renderMermaid();
 }
 
@@ -177,6 +225,7 @@ function bindLangSwitch() {
       applyI18n();
       startPrologue();
       startIntroSequence();
+      buildTradeSteps();
       renderMermaid();
       if (document.getElementById("market-section")) {
         fetchMarket();
