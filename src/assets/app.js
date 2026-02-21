@@ -236,6 +236,7 @@ async function fetchMarket() {
         : (I18N["market.na"] || missingKey("market.na"));
       const poolAmountEl = document.getElementById("pool-amount");
       const poolUpdatedEl = document.getElementById("pool-updated");
+      const poolUsdEl = document.getElementById("pool-usd");
       if (poolAmountEl) {
         const text = template(I18N["pool.amount"] || missingKey("pool.amount"), {
           AMOUNT: amount !== null ? formatNumber(amount, 6) : (I18N["market.na"] || missingKey("market.na")),
@@ -247,6 +248,12 @@ async function fetchMarket() {
           UPDATED: updated,
         });
         poolUpdatedEl.textContent = text;
+      }
+      if (poolUsdEl) {
+        const usd = data.distributionPool.amountUsd;
+        poolUsdEl.textContent = usd !== null && usd !== undefined
+          ? `$${formatNumber(usd, 2)}`
+          : (I18N["pool.usdPlaceholder"] || "—$");
       }
     }
   } catch (_) {

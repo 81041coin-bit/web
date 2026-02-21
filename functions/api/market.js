@@ -20,7 +20,8 @@ async function fetchDexScreener() {
   const liquidityUsd = best.liquidity ? best.liquidity.usd : null;
   const marketCapUsd = best.marketCap || best.fdv || null;
   const marketCapType = best.marketCap ? "Market Cap" : "FDV";
-  return { trades24h, liquidityUsd, marketCapUsd, marketCapType };
+  const priceUsd = best.priceUsd ? Number(best.priceUsd) : null;
+  return { trades24h, liquidityUsd, marketCapUsd, marketCapType, priceUsd };
 }
 
 async function fetchHolders(apiKey) {
@@ -80,7 +81,11 @@ export async function onRequestGet({ env }) {
         liquidityUsd: dex ? dex.liquidityUsd : null,
         marketCapUsd: dex ? dex.marketCapUsd : null
       },
-      distributionPool: pool ? { amount: pool.amount, updatedAt: new Date().toISOString() } : null
+      distributionPool: pool ? {
+        amount: pool.amount,
+        amountUsd: dex && dex.priceUsd ? pool.amount * dex.priceUsd : null,
+        updatedAt: new Date().toISOString()
+      } : null
     };
 
     cache = { ts: now, data: payload };
