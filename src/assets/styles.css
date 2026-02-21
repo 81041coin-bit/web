@@ -460,6 +460,24 @@ nav a:hover {
   color: var(--muted);
 }
 
+.dexscreener-embed {
+  border: 1px solid var(--border);
+  background: rgba(12, 20, 32, 0.6);
+  border-radius: var(--radius);
+  padding: 10px;
+  min-height: 360px;
+  display: grid;
+  gap: 12px;
+}
+
+.dexscreener-embed iframe {
+  width: 100%;
+  height: 420px;
+  border: none;
+  border-radius: 10px;
+  background: #0b0f14;
+}
+
 pre.mermaid {
   background: rgba(12, 20, 32, 0.7);
   border: 1px solid var(--border);
