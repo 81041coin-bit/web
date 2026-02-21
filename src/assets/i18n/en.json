@@ -52,7 +52,7 @@
   "pool.desc": "All 81041coin held by the operators will be distributed to coin holders upon project completion!!",
   "pool.amount": "Current balance (81041): {AMOUNT}",
   "pool.updated": "Last updated: {UPDATED}",
-  "pool.note1": "Current balance of 81041 held in the distribution pool wallet (verifiable on-chain).",
+  "pool.note1": "Current balance of 81041 held in the distribution pool wallet (verifiable on-chain). This balance will be used when distribution conditions are met under the project rules. Distribution conditions, eligibility, calculation, and procedures are described in \"Distribution System.\"",
   "pool.note2": "Eligibility, calculation, and procedures are described in “Distribution System.”",
   "pool.button": "Distribution System",
   "results.title": "View Results",
