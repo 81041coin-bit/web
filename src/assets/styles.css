@@ -485,6 +485,46 @@ pre.mermaid {
   display: block;
 }
 
+.pool-table {
+  margin-top: 18px;
+  display: grid;
+  gap: 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  background: rgba(12, 20, 32, 0.6);
+  width: 100%;
+}
+
+.pool-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(220px, 2fr);
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pool-row:last-child {
+  border-bottom: none;
+}
+
+.pool-label {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+.pool-value {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+}
+
+.pool-muted {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 footer {
   border-top: 1px solid var(--border);
   background: rgba(8, 12, 18, 0.8);

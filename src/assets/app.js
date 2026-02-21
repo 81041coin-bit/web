@@ -262,6 +262,17 @@ async function fetchMarket() {
     setText("market-trades", null, "market.na");
     setText("market-liquidity", null, "market.na");
     setText("market-cap", null, "market.na");
+    const poolUsdEl = document.getElementById("pool-usd");
+    if (poolUsdEl) poolUsdEl.textContent = I18N["pool.usdPlaceholder"] || "—$";
+    const poolAmountEl = document.getElementById("pool-amount");
+    if (poolAmountEl) {
+      const text = template(I18N["pool.amount"] || missingKey("pool.amount"), {
+        AMOUNT: I18N["market.na"] || missingKey("market.na"),
+      });
+      poolAmountEl.textContent = text;
+    }
+    const poolUpdatedEl = document.getElementById("pool-updated");
+    if (poolUpdatedEl) poolUpdatedEl.textContent = I18N["market.na"] || missingKey("market.na");
   }
 }
 
