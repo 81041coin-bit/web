@@ -112,7 +112,8 @@ function startIntroSequence() {
     { clear: true, hold: 900, fade: true },
     { primary: 11, hold: 2600 },
     { clear: true, hold: 1100, fade: true },
-    { light: "dark", hold: 1800 },
+    { light: "dark", demon: "hide", hold: 2000 },
+    { light: "strong", hold: 700 },
     { light: "strong", heaven: "show", heavenZoom: true, primary: 12, hold: 2800 },
     { clear: true, hold: 1000, fade: true },
     { primary: 13, hold: 1500 },
@@ -223,12 +224,16 @@ function startIntroSequence() {
       if (step.demonZoom) {
         setTimeout(() => setDemon("zoom"), 120);
       }
+    } else if (step.demon === "hide") {
+      setDemon("hide");
     }
     if (step.heaven === "show") {
       setHeaven("show");
       if (step.heavenZoom) {
         setTimeout(() => setHeaven("zoom"), 120);
       }
+    } else if (step.heaven === "hide") {
+      setHeaven("hide");
     }
 
     if (step.clear) {
