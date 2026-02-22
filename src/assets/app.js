@@ -94,6 +94,8 @@ function startIntroSequence() {
   let timerId = null;
   let cancelled = false;
   const skipBtn = intro.querySelector(".intro-skip");
+  let currentPrimary = null;
+  let currentSecondary = null;
 
   const steps = [
     { light: "dim", primary: 1, fast: false, hold: 2400 },
@@ -158,6 +160,8 @@ function startIntroSequence() {
         primaryEl.textContent = "";
         secondaryEl.textContent = "";
       }, 500);
+      currentPrimary = null;
+      currentSecondary = null;
       return;
     }
     primaryEl.classList.add("instant");
@@ -166,6 +170,8 @@ function startIntroSequence() {
     secondaryEl.classList.remove("show", "fast", "final");
     primaryEl.textContent = "";
     secondaryEl.textContent = "";
+    currentPrimary = null;
+    currentSecondary = null;
   }
 
   function setDemon(state) {
@@ -224,6 +230,15 @@ function startIntroSequence() {
     cancel: () => {
       cancelled = true;
       if (timerId) clearTimeout(timerId);
+    },
+    updateLang: () => {
+      const updated = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
+      if (currentPrimary && primaryEl.classList.contains("show")) {
+        primaryEl.textContent = updated[currentPrimary - 1] || "";
+      }
+      if (currentSecondary && secondaryEl.classList.contains("show")) {
+        secondaryEl.textContent = updated[currentSecondary - 1] || "";
+      }
     }
   };
 
@@ -256,8 +271,14 @@ function startIntroSequence() {
     } else {
       const primaryText = step.primary ? lines[step.primary - 1] : primaryEl.textContent;
       const secondaryText = step.secondary ? lines[step.secondary - 1] : secondaryEl.textContent;
-      if (step.primary) setLine(primaryEl, primaryText, true, step.fast, step.final);
-      if (step.secondary) setLine(secondaryEl, secondaryText, true, false, false);
+      if (step.primary) {
+        currentPrimary = step.primary;
+        setLine(primaryEl, primaryText, true, step.fast, step.final);
+      }
+      if (step.secondary) {
+        currentSecondary = step.secondary;
+        setLine(secondaryEl, secondaryText, true, false, false);
+      }
     }
 
     idx += 1;
@@ -565,8 +586,13 @@ function bindLangSwitch() {
       localStorage.setItem("lang", lang);
       await loadI18n(currentLang);
       applyI18n();
-      startPrologue();
-      startIntroSequence();
+      const intro = document.getElementById("intro");
+      if (intro && introController && introController.updateLang) {
+        introController.updateLang();
+      } else {
+        startPrologue();
+        startIntroSequence();
+      }
       buildTradeSteps();
       renderMermaid();
       if (document.getElementById("market-section")) {
