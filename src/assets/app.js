@@ -139,18 +139,16 @@ function buildTradeSteps() {
     /購入完了後の確認/,
     /よくある質問/,
     /重要な注意事項/,
-    /免責事項/,
-    /After purchase/i,
-    /Purchase complete/i,
-    /After Purchase Confirmation/i,
-    /Frequently Asked Questions/i,
-    /FAQ/i,
-    /Important/i,
-    /Important Notes/i,
-    /Disclaimer/i,
-    /Official Links/i,
-    /官方链接/,
-    /免责/,
+    /【免責事項】/,
+    /^After Purchase Confirmation/i,
+    /^Frequently Asked Questions/i,
+    /^Important Notes/i,
+    /^\\[Disclaimer\\]/i,
+    /^Disclaimer/i,
+    /购买完成后确认/,
+    /常见问题/,
+    /重要注意事项/,
+    /【免责声明】/,
   ];
 
   const found = [];
@@ -218,12 +216,12 @@ function buildTradeSteps() {
     const listItems = [];
     let caValue = null;
     const linkify = (text) =>
-      text.replace(/(https?:\\/\\/[^\\s)]+)/g, (match) =>
+      text.replace(/(https?:\/\/[^\s)]+)/g, (match) =>
         `<a href="${match}" target="_blank" rel="noopener">${match}</a>`
       );
     bodyLines.forEach((line) => {
       let cleaned = line.replace(/（[^）]*簡単にコピーできる形にして[^）]*）/g, "").trim();
-      const caMatch = cleaned.match(/CA\\s*[:：]\\s*([A-Za-z0-9]+)/);
+      const caMatch = cleaned.match(/CA\s*[:：]\s*([A-Za-z0-9]+)/);
       if (caMatch) {
         caValue = caMatch[1];
       }
