@@ -151,17 +151,12 @@ function buildTradeSteps() {
   };
 
   const cards = [];
-  blocks.slice(0, 13).forEach((block) => {
-    const titleLine = block.find((line) =>
-      stepRegex.test(line) ||
-      line.includes("購入完了後の確認") ||
-      line.includes("よくある質問") ||
-      line.includes("重要な注意事項") ||
-      line.includes("免責事項") ||
-      line.includes("Disclaimer") ||
-      line.includes("FAQ")
-    );
-    const title = titleLine ? titleLine.replace(/━+/g, "").trim() : "STEP";
+  const firstBlocks = blocks.slice(0, 9);
+  const extraBlocks = blocks.slice(9, 13);
+
+  firstBlocks.forEach((block, idx) => {
+    const titleLine = block.find((line) => stepRegex.test(line));
+    const title = titleLine ? titleLine.replace(/━+/g, "").trim() : `STEP ${idx + 1}`;
     const bodyLines = titleLine ? block.filter((line) => line !== titleLine) : block;
     const stepMatch = title.match(/STEP\\s*(\\d+)/i);
     const stepNum = stepMatch ? stepMatch[1] : null;
@@ -172,6 +167,23 @@ function buildTradeSteps() {
     const listItems = bodyLines.map((line) => `<li>${line}</li>`).join("");
     const bodyHtml = `<ul class="step-list">${listItems}</ul>`;
     cards.push(`<div class="trade-step"><h3>${title}</h3>${bodyHtml}${imagesHtml}</div>`);
+  });
+
+  extraBlocks.forEach((block, idx) => {
+    const titleLine = block.find((line) =>
+      line.includes("購入完了後の確認") ||
+      line.includes("よくある質問") ||
+      line.includes("重要な注意事項") ||
+      line.includes("免責事項") ||
+      line.includes("Disclaimer") ||
+      line.includes("FAQ")
+    );
+    const fallbackTitles = ["購入完了後の確認", "よくある質問", "重要な注意事項", "【免責事項】"];
+    const title = titleLine ? titleLine.replace(/━+/g, "").trim() : (fallbackTitles[idx] || "その他");
+    const bodyLines = titleLine ? block.filter((line) => line !== titleLine) : block;
+    const listItems = bodyLines.map((line) => `<li>${line}</li>`).join("");
+    const bodyHtml = `<ul class="step-list">${listItems}</ul>`;
+    cards.push(`<div class="trade-step"><h3>${title}</h3>${bodyHtml}</div>`);
   });
 
   introEl.innerHTML = "";
