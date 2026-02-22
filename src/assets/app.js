@@ -45,6 +45,7 @@ function applyI18n() {
   });
 
   buildFaqAccordion();
+  updateRevenueUseImage();
 }
 
 function startPrologue() {
@@ -335,6 +336,17 @@ function buildFaqAccordion() {
     })
     .join("");
   el.innerHTML = `<div class="faq-list">${html}</div>`;
+}
+
+function updateRevenueUseImage() {
+  const img = document.querySelector("[data-revenue-use]");
+  if (!img) return;
+  const map = {
+    ja: "/assets/img/revenue-use.jpg",
+    en: "/assets/img/revenue-use.en.png",
+    zh: "/assets/img/revenue-use.zh.png",
+  };
+  img.setAttribute("src", map[currentLang] || map.en);
 }
 
 function renderMermaid() {
