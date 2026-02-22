@@ -1,17 +1,16 @@
 const SOL_MINT = "9SbNtqtnXbSGKvQv6G1XMzmoiEMNHoNWQNtMz7sbpump";
 const CACHE_TTL_SEC = 60;
-const SOLANA_RPC = "https://api.mainnet-beta.solana.com";
 
 let cache = { ts: 0, data: null };
 
-async function fetchSupply() {
+async function fetchSupply(rpcUrl) {
   const body = {
     jsonrpc: "2.0",
     id: 1,
     method: "getTokenSupply",
     params: [SOL_MINT]
   };
-  const res = await fetch(SOLANA_RPC, {
+  const res = await fetch(rpcUrl, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(body)
@@ -64,7 +63,8 @@ async function fetchSupply() {
   return { totalSupply, totalSupplyStr, supply01pct, supply01pctStr, decimals };
 }
 
-export async function onRequestGet() {
+export async function onRequestGet({ env }) {
+  const rpcUrl = (env && env.SOLANA_RPC) || "https://api.mainnet-beta.solana.com";
   const now = Date.now();
   if (cache.data && now - cache.ts < CACHE_TTL_SEC * 1000) {
     return new Response(JSON.stringify(cache.data), {
@@ -72,7 +72,7 @@ export async function onRequestGet() {
     });
   }
   try {
-    const supply = await fetchSupply();
+    const supply = await fetchSupply(rpcUrl);
     const payload = {
       ok: true,
       asOf: new Date().toISOString(),
