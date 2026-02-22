@@ -25,6 +25,7 @@ html, body {
               linear-gradient(180deg, #0a0f16 0%, #0b111b 100%);
   color: var(--text);
   font-family: "Space Grotesk", "Sora", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  font-size: 18px;
   line-height: 1.6;
 }
 
@@ -665,7 +666,8 @@ pre.mermaid {
 
 .step-list {
   margin: 0;
-  padding-left: 18px;
+  padding-left: 0;
+  list-style: none;
   color: var(--muted);
   line-height: 1.7;
   font-size: 14px;
@@ -698,6 +700,45 @@ pre.mermaid {
 
 .trade-step a:hover {
   text-decoration: underline;
+}
+
+.faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.faq-list details {
+  background: rgba(12, 20, 32, 0.45);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.faq-list summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #e6ecff;
+  list-style: none;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list summary::after {
+  content: "+";
+  float: right;
+  color: var(--muted);
+}
+
+.faq-list details[open] summary::after {
+  content: "–";
+}
+
+.faq-answer {
+  margin-top: 8px;
+  color: var(--muted);
+  line-height: 1.6;
 }
 
 .pool-muted {
