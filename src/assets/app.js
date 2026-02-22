@@ -545,6 +545,8 @@ async function fetchSupply() {
   const statusEl = document.getElementById("supply-status");
   if (statusEl) statusEl.textContent = I18N["distribution.table.loading"] || missingKey("distribution.table.loading");
   try {
+    const ok = await fetchSupplyDirect();
+    if (ok) return;
     const res = await fetch("/api/supply");
     if (!res.ok) throw new Error("supply");
     const data = await res.json();
@@ -563,8 +565,7 @@ async function fetchSupply() {
     const updatedText = formatJst(new Date(data.asOf));
     if (statusEl) statusEl.textContent = updatedText ? `${updatedLabel}: ${updatedText}` : "";
   } catch (_) {
-    const ok = await fetchSupplyDirect();
-    if (!ok && statusEl) {
+    if (statusEl) {
       statusEl.textContent = I18N["distribution.table.error"] || missingKey("distribution.table.error");
     }
   }
