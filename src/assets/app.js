@@ -91,34 +91,37 @@ function startIntroSequence() {
   const skipBtn = intro.querySelector(".intro-skip");
 
   const steps = [
-    { light: "dim", primary: 1, fast: false, hold: 2000 },
-    { secondary: 2, hold: 1800 },
-    { clear: true, hold: 500 },
+    { light: "dim", primary: 1, fast: false, hold: 2200 },
+    { secondary: 2, hold: 2000 },
+    { clear: true, hold: 700, fade: true },
     { light: "dark", hold: 600 },
-    { primary: 3, demon: "show", demonZoom: true, fast: true, hold: 1500 },
-    { primary: 4, secondary: 5, hold: 2000 },
-    { clear: true, hold: 600 },
-    { primary: 6, hold: 1700 },
-    { clear: true, hold: 600 },
-    { primary: 7, hold: 1200 },
-    { secondary: 8, hold: 1200 },
-    { secondary: 9, hold: 1200 },
-    { secondary: 10, hold: 1200 },
-    { clear: true, hold: 600 },
+    { primary: 3, demon: "show", demonZoom: true, fast: true, hold: 2200 },
+    { clear: true, hold: 900, fade: true },
+    { primary: 4, hold: 1200 },
+    { secondary: 5, hold: 2000 },
+    { clear: true, hold: 700, fade: true },
+    { primary: 6, hold: 2000 },
+    { clear: true, hold: 700, fade: true },
+    { primary: 7, hold: 1800 },
+    { clear: true, hold: 900, fade: true },
+    { secondary: 8, hold: 1400 },
+    { secondary: 9, hold: 1400 },
+    { secondary: 10, hold: 1400 },
+    { clear: true, hold: 900, fade: true },
     { primary: 11, hold: 2000 },
-    { clear: true, hold: 600 },
-    { light: "dark", hold: 900 },
-    { light: "strong", heaven: "show", heavenZoom: true, primary: 12, hold: 2200 },
-    { clear: true, hold: 600 },
+    { clear: true, hold: 900, fade: true },
+    { light: "dark", hold: 1400 },
+    { light: "strong", heaven: "show", heavenZoom: true, primary: 12, hold: 2400 },
+    { clear: true, hold: 900, fade: true },
     { primary: 13, hold: 1400 },
     { secondary: 14, hold: 1400 },
-    { clear: true, hold: 600 },
+    { clear: true, hold: 700, fade: true },
     { primary: 15, hold: 1600 },
-    { clear: true, hold: 600 },
+    { clear: true, hold: 700, fade: true },
     { primary: 16, hold: 1600 },
-    { clear: true, hold: 600 },
+    { clear: true, hold: 700, fade: true },
     { primary: 17, hold: 1800, slow: true },
-    { clear: true, hold: 900 },
+    { clear: true, hold: 900, fade: true },
     { primary: 18, final: true, hold: 2600 }
   ];
 
@@ -137,7 +140,16 @@ function startIntroSequence() {
     el.classList.remove("instant");
   }
 
-  function clearLines() {
+  function clearLines(fade) {
+    if (fade) {
+      primaryEl.classList.remove("show", "fast", "final");
+      secondaryEl.classList.remove("show", "fast", "final");
+      setTimeout(() => {
+        primaryEl.textContent = "";
+        secondaryEl.textContent = "";
+      }, 500);
+      return;
+    }
     primaryEl.classList.add("instant");
     secondaryEl.classList.add("instant");
     primaryEl.classList.remove("show", "fast", "final");
@@ -218,7 +230,7 @@ function startIntroSequence() {
     }
 
     if (step.clear) {
-      clearLines();
+      clearLines(step.fade);
     } else {
       const primaryText = step.primary ? lines[step.primary - 1] : primaryEl.textContent;
       const secondaryText = step.secondary ? lines[step.secondary - 1] : secondaryEl.textContent;
