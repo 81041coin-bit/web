@@ -499,6 +499,16 @@ nav a:hover {
   visibility: visible;
 }
 
+.prologue-show-all .fade-line {
+  position: static;
+  opacity: 1;
+  transform: none;
+  animation: none;
+  display: block;
+  margin: 0 auto;
+  visibility: visible;
+}
+
 .prologue-cinematic .prologue-final {
   font-size: clamp(56px, 8vw, 96px);
   color: #ffffff;

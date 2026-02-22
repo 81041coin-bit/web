@@ -125,7 +125,7 @@ function startIntroSequence() {
     { clear: true, hold: 800, fade: true },
     { primary: 17, hold: 1900, slow: true },
     { clear: true, hold: 900, fade: true },
-    { light: "dark", hold: 1400 },
+    { heaven: "hide", light: "dark", hold: 1800 },
     { light: "reveal", primary: 18, final: true, hold: 2600 }
   ];
 
@@ -202,6 +202,7 @@ function startIntroSequence() {
       document.documentElement.classList.add("intro-done");
       const prologue = document.getElementById("prologue-section");
       if (prologue) {
+        prologue.classList.add("prologue-show-all");
         prologue.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }, 1200);
