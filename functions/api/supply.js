@@ -1,5 +1,5 @@
 const SOL_MINT = "9SbNtqtnXbSGKvQv6G1XMzmoiEMNHoNWQNtMz7sbpump";
-const CACHE_TTL_SEC = 300;
+const CACHE_TTL_SEC = 60;
 const SOLANA_RPC = "https://api.mainnet-beta.solana.com";
 
 let cache = { ts: 0, data: null };
@@ -21,8 +21,9 @@ async function fetchSupply() {
   const value = data && data.result && data.result.value ? data.result.value : null;
   if (!value) throw new Error("rpc");
   const decimals = Number(value.decimals || 0);
-  const amount = Number(value.amount || 0);
-  const totalSupply = amount / (10 ** decimals);
+  const uiAmountString = value.uiAmountString || value.uiAmount || value.amount;
+  const totalSupply = Number(uiAmountString);
+  if (!Number.isFinite(totalSupply)) throw new Error("rpc");
   const supply01pct = totalSupply * 0.001;
   return { totalSupply, supply01pct, decimals };
 }

@@ -765,6 +765,8 @@ pre.mermaid {
 .coef-graph-axes {
   color: var(--muted);
   font-size: 14px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .coef-graph-labels {

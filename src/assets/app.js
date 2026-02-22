@@ -1,5 +1,5 @@
 const MARKET_INTERVAL_SEC = 30;
-const SUPPLY_INTERVAL_MS = 300000;
+const SUPPLY_INTERVAL_MS = 60000;
 
 let currentLang = "en";
 let I18N = {};
@@ -22,6 +22,19 @@ function formatNumber(value, maxDecimals = 6) {
   return new Intl.NumberFormat(undefined, {
     maximumFractionDigits: maxDecimals,
   }).format(value);
+}
+
+function formatJst(date) {
+  if (!date) return null;
+  return new Intl.DateTimeFormat(undefined, {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).format(date);
 }
 
 function applyI18n() {
@@ -542,7 +555,7 @@ async function fetchSupply() {
 
     if (totalEl) totalEl.textContent = formatNumber(data.totalSupply, 6);
     if (pctEl) pctEl.textContent = formatNumber(data.supply01pct, 6);
-    if (updatedEl) updatedEl.textContent = new Date(data.asOf).toLocaleString();
+    if (updatedEl) updatedEl.textContent = formatJst(new Date(data.asOf));
 
     if (statusEl) statusEl.textContent = "";
   } catch (_) {
