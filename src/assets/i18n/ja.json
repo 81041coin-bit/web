@@ -183,5 +183,22 @@
   "trade.section11.body": "<div class=\"faq-list\"><details><summary>Q1. GMOコイン以外からも送金できますか？</summary><div class=\"faq-answer\">A1. はい、可能です。SOLを扱っている取引所であれば どこからでも送金できます。</div></details><details><summary>Q2. 送金にどのくらい時間がかかりますか？</summary><div class=\"faq-answer\">A2. 通常、数分から10分程度で完了します。 ネットワークの混雑状況により多少前後します。</div></details><details><summary>Q3. 最低購入金額はありますか？</summary><div class=\"faq-answer\">A3. Bitgetの最低取引額に準じます。 通常、数ドル相当から購入可能です。</div></details><details><summary>Q4. 購入したコインはどこに保管されますか？</summary><div class=\"faq-answer\">A4. Bitgetのウォレットに保管されます。 外部ウォレットへの送金も可能です。</div></details><details><summary>Q5. ネットワークを間違えて送金してしまいました</summary><div class=\"faq-answer\">A5. 残念ながら、間違ったネットワークに送金した場合、 資金の回収は非常に困難です。 必ずテスト送金を行ってから本番送金してください。</div></details></div>",
   "trade.section12.title": "重要な注意事項",
   "trade.section12.body": "<ul class=\"step-list\"><li>【ネットワーク選択について】</li><li>最も重要なのはネットワークの選択です。</li><li>必ず「SOL（Solana）」を選択してください。</li><li>間違ったネットワークを選択すると資金が失われます。</li><li>【テスト送金の推奨】</li><li>初めて送金する場合は、必ず少額でテスト送金を行い、</li><li>正しく届くことを確認してから本番送金してください。</li><li>【秘密鍵の管理】</li><li>アカウントのパスワードや秘密鍵は厳重に管理してください。</li><li>他人に教えたり、不審なサイトに入力しないでください。</li><li>【投資リスク】</li><li>暗号資産投資にはリスクが伴います。</li><li>必ず余剰資金で、自己責任で投資してください。</li><li>【免責事項】</li><li>本ガイドは情報提供を目的としており、投資を推奨するものではありません。</li><li>暗号資産投資にはリスクが伴います。</li><li>投資判断は必ずご自身の責任で行ってください。</li></ul>",
-  "trade.section.count": 12
+  "trade.section.count": 12,
+  "distribution.section1.title": "1. この制度の狙い",
+  "distribution.section1.body": "「逮捕時報酬」は、長期保有者をはっきり優遇するための仕組みです。我々のミッションの達成は長期的に支えてくださったホルダーの皆様のおかげです!!<br>長期で支持していただける皆さんへ還元のための施策です。<br>この制度で実現したいことは、次の4つです。<br>長期保有者を明確に優遇する<br>「売らない行動」に強いインセンティブを与える<br>時間の経過と共に買いを促進する",
+  "distribution.section2.title": "2. 報酬の原資はどう貯まる？",
+  "distribution.section2.body": "報酬の元になるお金（分配プール）は、積立方式です。<br>毎月の純収益の 10% を「逮捕時分配プール」に積み立て<br>途中での分配（中間分配）はしない<br>逮捕時に 一括分配 する<br>つまり、時間が経つほどプールが増えやすく、結果として長期保有の価値が自然に高まる設計です。<br>「毎月10%が貯まってプールが増える」積立の図（積立箱にコインが月ごとに増えるイメージ）",
+  "distribution.section3.title": "3. 分配を受け取れる人の条件（対象者）",
+  "distribution.section3.body": "継続的に総供給量の 0.1%以上 を保有していること<br>この基準を満たした人だけが、逮捕時の分配対象になります。<br>現在の0.1％が何枚かを表で表す（自動更新）<br>現在～枚",
+  "distribution.section4.title": "4. “時間”を評価する：連続保有係数",
+  "distribution.section4.body": "この制度の核は、連続で保有し続けた月数を評価するところです。<br>“下記の内容で係数テーブルを作成<br>係数テーブル<br>1ヶ月：1.0<br>2ヶ月：2.5<br>3ヶ月：4.0<br>4ヶ月：5.5<br>5ヶ月：7.5<br>6ヶ月以上：10.0“<br>ルール<br>月1回スナップショットで保有状況を確認（不定期）<br>条件未達（例：売却して0.1%未満になる等）が1回でもあると、連続はリセット<br>上限は「6ヶ月で最大10」",
+  "distribution.section5.title": "5. “量”を評価する：保有率係数",
+  "distribution.section5.body": "量（保有率）も評価しますが、上限を設けより長期保有者が得をする設計をしています。<br>“「保有率0.1%→2%で係数1→2」カーブのグラフを作成<br>保有率係数の式は制度案どおり。<br>保有率係数(r)=1+r-0.0010.02-0.001<br>（r＝保有率、0.001＝0.1%、0.02＝2%）<br>グラフに入れる文字<br>タイトル<br>「保有率係数カーブ（0.1% → 2%）」<br>X軸ラベル<br>保有率（%）<br>Y軸ラベル<br>保有率係数<br>“<br>上限保有率：2％<br>上限係数：2<br>＊２％以上の保有の場合でも係数は２です。<br>つまり、大口は多少有利になりますが、**“量だけで勝てない”**ように制御されています。",
+  "distribution.section.count": 8,
+  "distribution.section6.title": "6. 最終的にどうやって分配額が決まる？",
+  "distribution.section6.body": "分配はとても透明で、計算はシンプルです。<br>────────────────────────────────────────<br><div class=\"distribution-flow\"><img data-distribution-flow src=\"/assets/img/distribution.jp.png\" alt=\"Distribution Flow\"></div>",
+  "distribution.section7.title": "7. 何故長期で持った人を優遇",
+  "distribution.section7.body": "最大値で比べると、<br>連続保有（時間）の最大：10<br>保有率（量）の最大：2<br>つまり 時間：量 ＝ 10：2 ＝ 5：1。設計の意図は明確で、お金（量）だけでは勝てない。いちばん報われるのは、長く持ち続けた人です。",
+  "distribution.section8.title": "８. まとめ",
+  "distribution.section8.body": "この施策は<br>長期で支持していただいたホルダーへ還元するとともに、<br>ミームコインという一時的な盛り上がりだけで終わってしまうという現実に立ち向かうための施策です"
 }

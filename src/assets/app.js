@@ -46,6 +46,7 @@ function applyI18n() {
 
   buildFaqAccordion();
   updateRevenueUseImage();
+  updateDistributionFlowImage();
 }
 
 function startPrologue() {
@@ -347,6 +348,19 @@ function updateRevenueUseImage() {
     zh: "/assets/img/revenue-use.zh.png",
   };
   img.setAttribute("src", map[currentLang] || map.en);
+}
+
+function updateDistributionFlowImage() {
+  const imgs = document.querySelectorAll("[data-distribution-flow]");
+  if (!imgs.length) return;
+  const map = {
+    ja: "/assets/img/distribution.jp.png",
+    en: "/assets/img/distribution.en.png",
+    zh: "/assets/img/distribution.zh.jpg",
+  };
+  imgs.forEach((img) => {
+    img.setAttribute("src", map[currentLang] || map.en);
+  });
 }
 
 function renderMermaid() {

@@ -183,5 +183,22 @@
   "trade.section11.body": "<div class=\"faq-list\"><details><summary>Q1. 可以从 GMO Coin 以外转账吗？</summary><div class=\"faq-answer\">A1. 可以。只要是支持 SOL 的交易所都可以转账。</div></details><details><summary>Q2. 转账需要多久？</summary><div class=\"faq-answer\">A2. 通常几分钟到 10 分钟左右完成。会因网络拥堵情况有所变化。</div></details><details><summary>Q3. 有最低购买金额吗？</summary><div class=\"faq-answer\">A3. 按照 Bitget 的最低交易额执行。通常可从几美元等值开始购买。</div></details><details><summary>Q4. 购买的币存放在哪里？</summary><div class=\"faq-answer\">A4. 存放在 Bitget 钱包中。也可以转至外部钱包。</div></details><details><summary>Q5. 选错网络转账了怎么办？</summary><div class=\"faq-answer\">A5. 很遗憾，如果发送到错误网络，资金极难找回。请务必先进行测试转账再正式转账。</div></details></div>",
   "trade.section12.title": "重要注意事项",
   "trade.section12.body": "<ul class=\"step-list\"><li>【关于网络选择】最重要的是网络选择。务必选择 。选择错误网络将导致资金丢失。</li><li>【建议测试转账】首次转账务必先进行小额测试，确认正确到账后再正式转账。</li><li>【密钥管理】请严格管理账户密码和私钥。不要告诉他人，也不要输入到可疑网站。</li><li>【投资风险】加密资产投资存在风险。请务必使用可承受损失的资金并自行负责。</li><li>【免责声明】本指南仅用于信息提供，并不构成投资建议。加密资产投资存在风险。所有投资判断请自行负责。</li></ul>",
-  "trade.section.count": 12
+  "trade.section.count": 12,
+  "distribution.section1.title": "1. 什么是“逮捕时奖励”？",
+  "distribution.section1.body": "制度目的<br>“逮捕时奖励”是一种明确优待长期持有者的机制。<br>本项目使命的实现，离不开长期支持我们的持有者。该制度旨在回馈长期支持者。<br>制度目标：<br>明确优待长期持有者<br>为“不卖出”提供强激励<br>随时间推移自然促进持续买入",
+  "distribution.section2.title": "2. 奖励资金如何积累？",
+  "distribution.section2.body": "奖励资金采用积累方式。<br>每月净收益的10%进入“逮捕分配池”<br>不进行中途分配<br>在逮捕发生时一次性分配<br>随着时间推移，资金池持续增长，从而提升长期持有的价值。<br>（示意图：存钱箱中每月增加代币。）",
+  "distribution.section3.title": "3. 分配资格条件",
+  "distribution.section3.body": "必须满足：<br>持有总供应量的0.1%以上<br>仅符合该条件的持有者才有资格参与分配。<br>（当前0.1%对应数量自动显示。）",
+  "distribution.section4.title": "4. “时间”评价：连续持有系数",
+  "distribution.section4.body": "本制度核心在于奖励连续持有时间。<br>系数表<br>1个月：1.0<br>2个月：2.5<br>3个月：4.0<br>4个月：5.5<br>5个月：7.5<br>6个月及以上：10.0<br>规则<br>每月进行一次快照（时间不固定）<br>若任何一次不达标（例如低于0.1%），连续计数重置<br>6个月达到最大系数10<br><div class=\"coef-table\"><div class=\"coef-title\">系数表</div><table class=\"table\"><tbody><tr><th>1ヶ月</th><td>1.0</td></tr><tr><th>2ヶ月</th><td>2.5</td></tr><tr><th>3ヶ月</th><td>4.0</td></tr><tr><th>4ヶ月</th><td>5.5</td></tr><tr><th>5ヶ月</th><td>7.5</td></tr><tr><th>6ヶ月以上</th><td>10.0</td></tr></tbody></table></div>",
+  "distribution.section5.title": "5. “数量”评价：持有比例系数",
+  "distribution.section5.body": "持有数量也会被评价，但设定上限，以确保长期持有者更具优势。<br>（图表：持有率0.1%→2%，系数1→2）<br>公式<br>持有比例系数(r)：<br>HoldingCoefficient(r) = 1 + (r - 0.001) / (0.02 - 0.001)<br>（r=持有比例，0.001=0.1%，0.02=2%）<br>图表标题：“持有比例系数曲线（0.1% → 2%）”<br>X轴：持有比例（%）Y轴：持有比例系数<br>上限持有比例：2%<br>上限系数：2<br>超过2%仍按2计算<br>即：仅靠数量无法获胜。<br><div class=\"coef-graph\"><div class=\"coef-title\">持有比例系数曲线（0.1% → 2%）</div><svg viewBox=\"0 0 320 200\" class=\"coef-graph-svg\" aria-hidden=\"true\"><polyline fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" points=\"20,170 80,150 140,120 200,90 260,60 300,40\" /><line x1=\"20\" y1=\"170\" x2=\"300\" y2=\"170\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\"0.4\" /><line x1=\"20\" y1=\"20\" x2=\"20\" y2=\"170\" stroke=\"currentColor\" stroke-width=\"1\" opacity=\"0.4\" /></svg><div class=\"coef-graph-axes\">持有比例（%） / 持有比例系数</div><div class=\"coef-graph-labels\">上限持有比例：2%<br>上限系数：2</div></div>",
+  "distribution.section6.title": "6. 最终分配如何计算？",
+  "distribution.section6.body": "计算方式透明且简单。<br>个人系数 =连续持有系数 × 持有比例系数<br>个人占比 =个人系数 ÷ 全部符合条件者系数总和<br>最终分配金额 =分配池 × 个人占比<br><div class=\"distribution-flow\"><img data-distribution-flow src=\"/assets/img/distribution.zh.jpg\" alt=\"Distribution Flow\"></div>",
+  "distribution.section7.title": "7. 为什么长期持有者更受优待？",
+  "distribution.section7.body": "最大值对比：<br>时间（连续持有）：10<br>数量（持有比例）：2<br>比例 = 10 : 2 = 5 : 1<br>设计意图明确：<br>仅靠资金无法胜出。真正获得最大回报的是长期持有者。",
+  "distribution.section8.title": "8. 总结",
+  "distribution.section8.body": "该制度回馈长期支持者，并正面应对“迷因币只是一时热度”的现实问题。",
+  "distribution.section.count": 8
 }

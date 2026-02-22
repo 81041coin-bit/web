@@ -741,6 +741,45 @@ pre.mermaid {
   line-height: 1.6;
 }
 
+.coef-table {
+  margin-top: 12px;
+}
+
+.coef-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.coef-graph {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.coef-graph-svg {
+  width: 100%;
+  height: auto;
+  color: #3aa3ff;
+}
+
+.coef-graph-axes {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.coef-graph-labels {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.distribution-flow img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(12, 20, 32, 0.6);
+}
+
 .pool-muted {
   color: var(--muted);
   font-size: 14px;
