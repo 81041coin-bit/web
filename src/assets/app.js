@@ -552,7 +552,13 @@ async function fetchSupply() {
     const pctEl = document.getElementById("supply-01");
     const updatedLabel = I18N["distribution.table.updated"] || missingKey("distribution.table.updated");
 
-    if (pctEl) pctEl.textContent = formatNumber(data.supply01pct, 6);
+    let supplyText = null;
+    if (Number.isFinite(data.supply01pct)) {
+      supplyText = formatNumber(data.supply01pct, 6);
+    } else if (data.supply01pctStr) {
+      supplyText = data.supply01pctStr;
+    }
+    if (pctEl) pctEl.textContent = supplyText ?? (I18N["market.na"] || "—");
     const updatedText = formatJst(new Date(data.asOf));
     if (statusEl) statusEl.textContent = updatedText ? `${updatedLabel}: ${updatedText}` : "";
   } catch (_) {

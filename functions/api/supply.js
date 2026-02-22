@@ -21,11 +21,28 @@ async function fetchSupply() {
   const value = data && data.result && data.result.value ? data.result.value : null;
   if (!value) throw new Error("rpc");
   const decimals = Number(value.decimals || 0);
-  const uiAmountString = value.uiAmountString || value.uiAmount || value.amount;
-  const totalSupply = Number(uiAmountString);
+  const amountStr = String(value.amount || "0");
+  const amountBig = BigInt(amountStr);
+  const uiAmountString = value.uiAmountString || value.uiAmount || null;
+
+  function formatFromBigInt(bigValue, decimalPlaces) {
+    const isNegative = bigValue < 0n;
+    const raw = (isNegative ? -bigValue : bigValue).toString();
+    if (decimalPlaces === 0) return (isNegative ? "-" : "") + raw;
+    const padded = raw.padStart(decimalPlaces + 1, "0");
+    const intPart = padded.slice(0, -decimalPlaces);
+    const fracPart = padded.slice(-decimalPlaces).replace(/0+$/, "") || "0";
+    return `${isNegative ? "-" : ""}${intPart}.${fracPart}`;
+  }
+
+  const totalSupplyStr = uiAmountString ? String(uiAmountString) : formatFromBigInt(amountBig, decimals);
+  const totalSupply = Number(totalSupplyStr);
+  const supply01pctStr = formatFromBigInt(amountBig, decimals + 3);
+  const supply01pct = Number(supply01pctStr);
+
   if (!Number.isFinite(totalSupply)) throw new Error("rpc");
-  const supply01pct = totalSupply * 0.001;
-  return { totalSupply, supply01pct, decimals };
+  if (!Number.isFinite(supply01pct)) throw new Error("rpc");
+  return { totalSupply, totalSupplyStr, supply01pct, supply01pctStr, decimals };
 }
 
 export async function onRequestGet() {
@@ -41,7 +58,9 @@ export async function onRequestGet() {
       ok: true,
       asOf: new Date().toISOString(),
       totalSupply: supply.totalSupply,
+      totalSupplyStr: supply.totalSupplyStr,
       supply01pct: supply.supply01pct,
+      supply01pctStr: supply.supply01pctStr,
       decimals: supply.decimals
     };
     cache = { ts: now, data: payload };
