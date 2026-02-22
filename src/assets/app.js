@@ -125,13 +125,15 @@ function startIntroSequence() {
     { clear: true, hold: 800, fade: true },
     { primary: 17, hold: 1900, slow: true },
     { clear: true, hold: 900, fade: true },
-    { primary: 18, final: true, hold: 2600 }
+    { light: "dark", hold: 1400 },
+    { light: "reveal", primary: 18, final: true, hold: 2600 }
   ];
 
   function setLight(mode) {
-    intro.classList.remove("intro-dark", "intro-light-dim", "intro-light-strong");
+    intro.classList.remove("intro-dark", "intro-light-dim", "intro-light-strong", "intro-reveal");
     if (mode === "dim") intro.classList.add("intro-light-dim");
     else if (mode === "strong") intro.classList.add("intro-light-strong");
+    else if (mode === "reveal") intro.classList.add("intro-reveal");
     else intro.classList.add("intro-dark");
   }
 
