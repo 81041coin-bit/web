@@ -559,7 +559,18 @@ async function fetchSupply() {
     } else if (Number.isFinite(data.supply01pct)) {
       supplyText = formatNumber(data.supply01pct, 6);
     }
-    if (pctEl) pctEl.textContent = supplyText ?? (I18N["market.na"] || "—");
+    if (pctEl) {
+      if (Number.isFinite(data.supply01pct)) {
+        pctEl.textContent = `${Math.floor(data.supply01pct).toLocaleString()}枚以上`;
+      } else if (data.supply01pctStr) {
+        const rounded = Math.floor(Number(data.supply01pctStr));
+        pctEl.textContent = Number.isFinite(rounded)
+          ? `${rounded.toLocaleString()}枚以上`
+          : data.supply01pctStr;
+      } else {
+        pctEl.textContent = I18N["market.na"] || "—";
+      }
+    }
     const updatedText = formatJst(new Date(data.asOf));
     if (statusEl) statusEl.textContent = updatedText ? `${updatedLabel}: ${updatedText}` : "";
   } catch (_) {
@@ -602,7 +613,12 @@ async function fetchSupplyDirect() {
     };
     const supply01pctStr = formatFromBigInt(amountBig, decimals + 3);
     const pctEl = document.getElementById("supply-01");
-    if (pctEl) pctEl.textContent = supply01pctStr;
+    if (pctEl) {
+      const rounded = Math.floor(Number(supply01pctStr));
+      pctEl.textContent = Number.isFinite(rounded)
+        ? `${rounded.toLocaleString()}枚以上`
+        : supply01pctStr;
+    }
     const statusEl = document.getElementById("supply-status");
     const updatedLabel = I18N["distribution.table.updated"] || missingKey("distribution.table.updated");
     const updatedText = formatJst(new Date());
