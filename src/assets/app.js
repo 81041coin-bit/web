@@ -123,43 +123,68 @@ function buildTradeSteps() {
   if (!source || !stepsEl || !introEl) return;
 
   const html = source.innerHTML || source.textContent || "";
-  const lines = html
+  const sepRegex = /(━{5,}|─{5,}|—{5,})/;
+  const rawLines = html
     .split("<br>")
     .map((line) => line.trim())
-    .filter((line) => line && !/(━{5,}|─{5,}|—{5,})/.test(line));
-  const stepRegex = /(STEP\\s*\\d+|【STEP\\s*\\d+】|STEP\\s*\\d+：|STEP\\s*\\d+\\s*：|STEP\\s*\\d+\\s*\\-|STEP\\s*\\d+\\s*：)/i;
+    .filter((line) => line);
+  const lines = rawLines.filter((line) => !sepRegex.test(line));
+  const stepRegex = /(STEP\\s*\\d+|【STEP\\s*\\d+】|STEP\\s*\\d+：|STEP\\s*\\d+\\s*：|STEP\\s*\\d+\\s*\\-|STEP\\s*\\d+\\s*：|步骤\\s*\\d+)/i;
 
-  const sectionPatterns = [
-    { id: "step1", regex: [/STEP\\s*1/i, /【STEP\\s*1】/i] },
-    { id: "step2", regex: [/STEP\\s*2/i, /【STEP\\s*2】/i] },
-    { id: "step3", regex: [/STEP\\s*3/i, /【STEP\\s*3】/i] },
-    { id: "step4", regex: [/STEP\\s*4/i, /【STEP\\s*4】/i] },
-    { id: "step5", regex: [/STEP\\s*5/i, /【STEP\\s*5】/i] },
-    { id: "step6", regex: [/STEP\\s*6/i, /【STEP\\s*6】/i] },
-    { id: "step7", regex: [/STEP\\s*7/i, /【STEP\\s*7】/i] },
-    { id: "step8", regex: [/STEP\\s*8/i, /【STEP\\s*8】/i] },
-    { id: "step9", regex: [/STEP\\s*9/i, /【STEP\\s*9】/i] },
-    { id: "confirm", regex: [/購入完了後の確認/, /After purchase/i, /Purchase complete/i, /购买完成后/i] },
-    { id: "faq", regex: [/よくある質問/, /FAQ/i, /常见问题/i] },
-    { id: "important", regex: [/重要な注意事項/, /Important/i, /重要注意事项/i] },
-    { id: "disclaimer", regex: [/免責事項/, /Disclaimer/i, /免责声明/i] },
+  const headingRegexes = [
+    /STEP\\s*\\d+/i,
+    /【STEP\\s*\\d+】/i,
+    /步骤\\s*\\d+/,
+    /購入完了後の確認/,
+    /よくある質問/,
+    /重要な注意事項/,
+    /免責事項/,
+    /After purchase/i,
+    /Purchase complete/i,
+    /FAQ/i,
+    /Important/i,
+    /Disclaimer/i,
+    /Official Links/i,
+    /官方链接/,
+    /免责/,
   ];
 
   const found = [];
-  sectionPatterns.forEach((pattern) => {
-    const idx = lines.findIndex((line) => pattern.regex.some((rx) => rx.test(line)));
-    if (idx !== -1) {
-      found.push({ idx, title: lines[idx] });
+  lines.forEach((line, idx) => {
+    if (headingRegexes.some((rx) => rx.test(line))) {
+      found.push({ idx, title: line });
     }
   });
 
-  found.sort((a, b) => a.idx - b.idx);
   const sections = [];
-  for (let i = 0; i < found.length; i += 1) {
-    const start = found[i].idx;
-    const end = i + 1 < found.length ? found[i + 1].idx : lines.length;
-    const bodyLines = lines.slice(start + 1, end);
-    sections.push({ title: found[i].title, body: bodyLines });
+  if (found.length) {
+    for (let i = 0; i < found.length; i += 1) {
+      const start = found[i].idx;
+      const end = i + 1 < found.length ? found[i + 1].idx : lines.length;
+      const bodyLines = lines.slice(start + 1, end);
+      sections.push({ title: found[i].title, body: bodyLines });
+    }
+  } else {
+    const blocks = [];
+    let currentBlock = [];
+    rawLines.forEach((line) => {
+      if (sepRegex.test(line)) {
+        if (currentBlock.length) {
+          blocks.push(currentBlock);
+          currentBlock = [];
+        }
+        return;
+      }
+      currentBlock.push(line);
+    });
+    if (currentBlock.length) blocks.push(currentBlock);
+
+    blocks.forEach((block) => {
+      if (!block.length) return;
+      const title = block[0];
+      const bodyLines = block.slice(1);
+      sections.push({ title, body: bodyLines });
+    });
   }
 
   const imageMap = {
@@ -175,7 +200,7 @@ function buildTradeSteps() {
   sections.forEach((section) => {
     const title = section.title.replace(/━+/g, "").trim();
     const bodyLines = section.body;
-    const stepMatch = title.match(/STEP\\s*(\\d+)/i);
+    const stepMatch = title.match(/(?:STEP|步骤)\\s*(\\d+)/i);
     const stepNum = stepMatch ? stepMatch[1] : null;
     const images = stepNum && imageMap[stepNum] ? imageMap[stepNum] : [];
     const imagesHtml = images.length
@@ -186,7 +211,14 @@ function buildTradeSteps() {
     cards.push(`<div class="trade-step"><h3>${title}</h3>${bodyHtml}${imagesHtml}</div>`);
   });
 
-  introEl.innerHTML = "";
+  const introLines = found.length ? lines.slice(0, found[0].idx) : [];
+  if (introLines.length) {
+    introEl.style.display = "";
+    introEl.innerHTML = introLines.map((line) => `<p>${line}</p>`).join("");
+  } else {
+    introEl.style.display = "none";
+    introEl.innerHTML = "";
+  }
   stepsEl.innerHTML = cards.join("");
 }
 
