@@ -140,12 +140,15 @@ function buildTradeSteps() {
     /よくある質問/,
     /重要な注意事項/,
     /【免責事項】/,
-    /^After Purchase Confirmation/i,
-    /^Frequently Asked Questions/i,
-    /^Important Notes/i,
+    /Confirmation After Purchase/i,
+    /After Purchase Confirmation/i,
+    /Frequently Asked Questions/i,
+    /Important Notes/i,
+    /【Disclaimer】/i,
     /^\\[Disclaimer\\]/i,
     /^Disclaimer/i,
     /购买完成后确认/,
+    /购买完成后的确认/,
     /常见问题/,
     /重要注意事项/,
     /【免责声明】/,
@@ -197,19 +200,20 @@ function buildTradeSteps() {
     "7-1": ["/assets/img/step7-1.jpeg"],
     "7-2": ["/assets/img/step7-2.jpeg"],
     "8-1": ["/assets/img/step8-1.jpeg"],
-    "8-2": ["/assets/img/step9-1.jpeg"],
+    "9-1": ["/assets/img/step9-1.jpeg"],
     "9": ["/assets/img/step9-1.jpeg"],
   };
 
   const cards = [];
   sections.forEach((section) => {
-    const title = section.title
-      .replace(/（見出し）/g, "")
-      .replace(/━+/g, "")
-      .trim();
+    const instructionRegex = /”([^”]+)”/g;
+    const stripInstructions = (line) => line.replace(instructionRegex, "").trim();
+    const title = stripInstructions(
+      section.title.replace(/（見出し）/g, "").replace(/━+/g, "")
+    );
     const bodyLines = section.body
       .map((line) => line.replace(/（見出し）/g, "").trim())
-      .filter((line) => line && !/画像を表示/.test(line));
+      .filter((line) => line);
     const stepMatch = title.match(/(?:STEP|步骤)\\s*(\\d+)/i);
     const stepNum = stepMatch ? stepMatch[1] : null;
     const images = [];
@@ -222,22 +226,58 @@ function buildTradeSteps() {
       );
     const normalizeDigits = (value) =>
       value.replace(/[０-９]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0xFF10 + 0x30));
-    const imageInstrRegex = /Step\\s*([0-9０-９]+)\\s*[-―ー–—]?\\s*([0-9０-９]+)?\\s*の画像を表示/i;
+    const stepInstrRegexes = [
+      /Step\\s*([0-9０-９]+)\\s*[-―ー–—]?\\s*([0-9０-９]+)?/i,
+      /步骤\\s*([0-9０-９]+)\\s*[-―ー–—]?\\s*([0-9０-９]+)?/i,
+      /([0-9０-９]+)\\s*[-―ー–—]?\\s*([0-9０-９]+)?\\s*图片/i,
+    ];
     bodyLines.forEach((line) => {
-      let cleaned = line.replace(/（[^）]*簡単にコピーできる形にして[^）]*）/g, "").trim();
-      const imageMatch = cleaned.match(imageInstrRegex);
-      if (imageMatch) {
-        const main = normalizeDigits(imageMatch[1]);
-        const sub = imageMatch[2] ? normalizeDigits(imageMatch[2]) : null;
-        const key = sub ? `${main}-${sub}` : main;
-        if (imageMap[key]) images.push(...imageMap[key]);
+      const instructions = [];
+      let cleaned = line.replace(instructionRegex, (_, instr) => {
+        instructions.push(instr.trim());
+        return "";
+      }).trim();
+      cleaned = cleaned.replace(/（[^）]*簡単にコピーできる形にして[^）]*）/g, "").trim();
+
+      let linkUrl = null;
+      instructions.forEach((instr) => {
+        const urlMatch = instr.match(/https?:\/\/[^\s)]+/);
+        if (urlMatch) {
+          linkUrl = urlMatch[0];
+          if (/招待コード|Referral Code|推荐码|Referral/i.test(instr)) {
+            listItems.push(`<li>${linkify(instr)}</li>`);
+          }
+        }
+        if (/画像を表示|Display|image|图片|显示/i.test(instr)) {
+          let stepMatch = null;
+          for (const rx of stepInstrRegexes) {
+            const m = instr.match(rx);
+            if (m) {
+              stepMatch = m;
+              break;
+            }
+          }
+          if (stepMatch) {
+            const main = normalizeDigits(stepMatch[1] || "");
+            const sub = stepMatch[2] ? normalizeDigits(stepMatch[2]) : null;
+            const key = sub ? `${main}-${sub}` : main;
+            if (imageMap[key]) images.push(...imageMap[key]);
+          }
+        }
+      });
+
+      if (!cleaned) {
         return;
       }
+
       const caMatch = cleaned.match(/CA\s*[:：]\s*([A-Za-z0-9]+)/);
       if (caMatch) {
         caValue = caMatch[1];
       }
       cleaned = linkify(cleaned);
+      if (linkUrl && /タップ|tap|点击/i.test(instructions.join(" "))) {
+        cleaned = `<a href="${linkUrl}" target="_blank" rel="noopener">${cleaned}</a>`;
+      }
       listItems.push(`<li>${cleaned}</li>`);
     });
     const listHtml = `<ul class="step-list">${listItems.join("")}</ul>`;
