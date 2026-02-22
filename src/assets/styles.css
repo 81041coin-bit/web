@@ -676,69 +676,6 @@ pre.mermaid {
   background: rgba(12, 20, 32, 0.6);
 }
 
-.content-cards {
-  display: grid;
-  gap: 16px;
-}
-
-.content-card {
-  background: rgba(12, 20, 32, 0.6);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px 18px;
-  box-shadow: var(--shadow);
-}
-
-.content-card h3 {
-  margin: 0 0 10px;
-  font-size: 18px;
-}
-
-.content-card .card-body {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.accordion {
-  display: grid;
-  gap: 12px;
-}
-
-.accordion details {
-  background: rgba(12, 20, 32, 0.6);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px 14px;
-}
-
-.accordion summary {
-  cursor: pointer;
-  font-weight: 600;
-  list-style: none;
-}
-
-.accordion summary::marker {
-  display: none;
-}
-
-.accordion summary::after {
-  content: "＋";
-  float: right;
-  color: var(--accent);
-}
-
-.accordion details[open] summary::after {
-  content: "－";
-}
-
-.accordion .answer {
-  color: var(--muted);
-  margin-top: 8px;
-  line-height: 1.6;
-  font-size: 14px;
-}
-
 .pool-muted {
   color: var(--muted);
   font-size: 14px;

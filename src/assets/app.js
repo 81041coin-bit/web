@@ -122,9 +122,9 @@ function buildTradeSteps() {
   const introEl = document.getElementById("trade-intro");
   if (!source || !stepsEl || !introEl) return;
 
-  const html = source.innerHTML || source.textContent || "";
+  const html = source.innerHTML || "";
   const lines = html.split("<br>");
-  const stepRegex = /(STEP\\s*\\d+|【STEP\\s*\\d+】|STEP\\s*\\d+：|STEP\\s*\\d+\\s*：|STEP\\s*\\d+\\s*\\-|STEP\\s*\\d+\\s*：)/i;
+  const stepRegex = /(STEP\\s*\\d+|【STEP\\s*\\d+】)/i;
 
   let current = null;
   const steps = [];
@@ -143,8 +143,8 @@ function buildTradeSteps() {
     }
   });
 
-  introEl.innerHTML = `<div class="step-body">${intro.join("<br>") || html}</div>`;
-  stepsEl.innerHTML = steps.length ? steps.map((step) => {
+  introEl.innerHTML = `<div class="step-body">${intro.join("<br>")}</div>`;
+  stepsEl.innerHTML = steps.map((step) => {
     const stepMatch = step.title.match(/STEP\\s*(\\d+)/i);
     const stepNum = stepMatch ? stepMatch[1] : null;
     const imageMap = {
@@ -160,102 +160,7 @@ function buildTradeSteps() {
       ? `<div class="trade-step-images">${images.map((src) => `<img src="${src}" alt="${step.title}">`).join("")}</div>`
       : "";
     return `<div class="trade-step"><h3>${step.title}</h3><div class="step-body">${step.body.join("<br>")}</div>${imagesHtml}</div>`;
-  }).join("") : "";
-}
-
-function buildDistributionSections() {
-  const source = document.getElementById("distribution-body-source");
-  const container = document.getElementById("distribution-content");
-  if (!source || !container) return;
-  const html = source.innerHTML || source.textContent || "";
-  const lines = html.split("<br>");
-  const sectionRegex = /^([0-9０-９]+)[\\.．]/;
-
-  const sections = [];
-  let current = null;
-  const intro = [];
-
-  lines.forEach((line) => {
-    const cleaned = line.trim();
-    if (!cleaned) return;
-    if (sectionRegex.test(cleaned)) {
-      current = { title: cleaned, body: [] };
-      sections.push(current);
-    } else if (current) {
-      current.body.push(cleaned);
-    } else {
-      intro.push(cleaned);
-    }
-  });
-
-  const cards = [];
-  if (intro.length) {
-    cards.push(`<div class="content-card"><div class="card-body">${intro.join("<br>")}</div></div>`);
-  }
-  sections.forEach((section) => {
-    cards.push(
-      `<div class="content-card"><h3>${section.title}</h3><div class="card-body">${section.body.join("<br>")}</div></div>`
-    );
-  });
-  container.innerHTML = cards.length
-    ? cards.join("")
-    : `<div class="content-card"><div class="card-body">${html}</div></div>`;
-}
-
-function buildResultsCards() {
-  const source = document.getElementById("results-body-source");
-  const container = document.getElementById("results-content");
-  if (!source || !container) return;
-  const html = source.innerHTML || source.textContent || "";
-  const lines = html.split("<br>");
-  const intro = [];
-  const archive = [];
-  let inArchive = false;
-  lines.forEach((line) => {
-    const cleaned = line.trim();
-    if (!cleaned) return;
-    if (cleaned.includes("アーカイブ") || cleaned.includes("Archive")) {
-      inArchive = true;
-    }
-    (inArchive ? archive : intro).push(cleaned);
-  });
-
-  const cards = [];
-  if (intro.length) {
-    cards.push(`<div class="content-card"><div class="card-body">${intro.join("<br>")}</div></div>`);
-  }
-  if (archive.length) {
-    cards.push(`<div class="content-card"><div class="card-body">${archive.join("<br>")}</div></div>`);
-  }
-  container.innerHTML = cards.length
-    ? cards.join("")
-    : `<div class="content-card"><div class="card-body">${html}</div></div>`;
-}
-
-function buildFaqAccordion() {
-  const source = document.getElementById("faq-body-source");
-  const container = document.getElementById("faq-content");
-  if (!source || !container) return;
-  const html = source.innerHTML || source.textContent || "";
-  const lines = html.split("<br>");
-  const qRegex = /^(\\d+\\.|Q\\d+|Q\\d+\\.|Q\\d+：|Q\\d+\\s)/i;
-  const items = [];
-  let current = null;
-  lines.forEach((line) => {
-    const cleaned = line.trim();
-    if (!cleaned) return;
-    if (qRegex.test(cleaned)) {
-      current = { q: cleaned, a: [] };
-      items.push(current);
-    } else if (current) {
-      current.a.push(cleaned);
-    }
-  });
-  container.innerHTML = items.length
-    ? items.map((item) => (
-      `<details><summary>${item.q}</summary><div class="answer">${item.a.join("<br>")}</div></details>`
-    )).join("")
-    : `<div class="content-card"><div class="card-body">${html}</div></div>`;
+  }).join("");
 }
 
 function renderMermaid() {
@@ -300,9 +205,6 @@ async function detectLang() {
   startPrologue();
   startIntroSequence();
   buildTradeSteps();
-  buildDistributionSections();
-  buildResultsCards();
-  buildFaqAccordion();
   renderMermaid();
 }
 
@@ -318,9 +220,6 @@ function bindLangSwitch() {
       startPrologue();
       startIntroSequence();
       buildTradeSteps();
-      buildDistributionSections();
-      buildResultsCards();
-      buildFaqAccordion();
       renderMermaid();
       if (document.getElementById("market-section")) {
         fetchMarket();
