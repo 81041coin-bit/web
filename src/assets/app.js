@@ -122,47 +122,60 @@ function buildTradeSteps() {
   const introEl = document.getElementById("trade-intro");
   if (!source || !stepsEl || !introEl) return;
 
-  const html = source.innerHTML || "";
-  const lines = html.split("<br>");
-  const stepRegex = /(STEP\\s*\\d+|【STEP\\s*\\d+】)/i;
+  const html = source.innerHTML || source.textContent || "";
+  const lines = html.split("<br>").map((line) => line.trim()).filter(Boolean);
+  const stepRegex = /(STEP\\s*\\d+|【STEP\\s*\\d+】|STEP\\s*\\d+：|STEP\\s*\\d+\\s*：|STEP\\s*\\d+\\s*\\-|STEP\\s*\\d+\\s*：)/i;
+  const blockRegex = /(━{5,}|─{5,}|—{5,})/;
 
-  let current = null;
-  const steps = [];
-  const intro = [];
-
+  const blocks = [];
+  let currentBlock = [];
   lines.forEach((line) => {
-    const cleaned = line.trim();
-    if (!cleaned) return;
-    if (stepRegex.test(cleaned)) {
-      current = { title: cleaned.replace(/━+/g, "").trim(), body: [] };
-      steps.push(current);
-    } else if (current) {
-      current.body.push(cleaned);
-    } else {
-      intro.push(cleaned);
+    if (blockRegex.test(line)) {
+      if (currentBlock.length) {
+        blocks.push(currentBlock);
+        currentBlock = [];
+      }
+      return;
     }
+    currentBlock.push(line);
   });
+  if (currentBlock.length) blocks.push(currentBlock);
 
-  introEl.innerHTML = `<div class="step-body">${intro.join("<br>")}</div>`;
-  stepsEl.innerHTML = steps.map((step) => {
-    const stepMatch = step.title.match(/STEP\\s*(\\d+)/i);
+  const imageMap = {
+    "3": ["/assets/img/step3.jpeg"],
+    "4": ["/assets/img/step4.jpeg", "/assets/img/step4-2.jpeg"],
+    "5": ["/assets/img/step5.jpeg"],
+    "7": ["/assets/img/step7-1.jpeg", "/assets/img/step7-2.jpeg"],
+    "8": ["/assets/img/step8-1.jpeg"],
+    "9": ["/assets/img/step9-1.jpeg"]
+  };
+
+  const cards = [];
+  blocks.slice(0, 13).forEach((block) => {
+    const titleLine = block.find((line) =>
+      stepRegex.test(line) ||
+      line.includes("購入完了後の確認") ||
+      line.includes("よくある質問") ||
+      line.includes("重要な注意事項") ||
+      line.includes("免責事項") ||
+      line.includes("Disclaimer") ||
+      line.includes("FAQ")
+    );
+    const title = titleLine ? titleLine.replace(/━+/g, "").trim() : "STEP";
+    const bodyLines = titleLine ? block.filter((line) => line !== titleLine) : block;
+    const stepMatch = title.match(/STEP\\s*(\\d+)/i);
     const stepNum = stepMatch ? stepMatch[1] : null;
-    const imageMap = {
-      "3": ["/assets/img/step3.jpeg"],
-      "4": ["/assets/img/step4.jpeg", "/assets/img/step4-2.jpeg"],
-      "5": ["/assets/img/step5.jpeg"],
-      "7": ["/assets/img/step7-1.jpeg", "/assets/img/step7-2.jpeg"],
-      "8": ["/assets/img/step8-1.jpeg"],
-      "9": ["/assets/img/step9-1.jpeg"]
-    };
     const images = stepNum && imageMap[stepNum] ? imageMap[stepNum] : [];
     const imagesHtml = images.length
-      ? `<div class="trade-step-images">${images.map((src) => `<img src="${src}" alt="${step.title}">`).join("")}</div>`
+      ? `<div class="trade-step-images">${images.map((src) => `<img src="${src}" alt="${title}">`).join("")}</div>`
       : "";
-    const listItems = step.body.map((line) => `<li>${line}</li>`).join("");
+    const listItems = bodyLines.map((line) => `<li>${line}</li>`).join("");
     const bodyHtml = `<ul class="step-list">${listItems}</ul>`;
-    return `<div class="trade-step"><h3>${step.title}</h3>${bodyHtml}${imagesHtml}</div>`;
-  }).join("");
+    cards.push(`<div class="trade-step"><h3>${title}</h3>${bodyHtml}${imagesHtml}</div>`);
+  });
+
+  introEl.innerHTML = "";
+  stepsEl.innerHTML = cards.join("");
 }
 
 function renderMermaid() {
