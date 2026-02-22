@@ -30,7 +30,17 @@ async function fetchHolders(apiKey) {
   const res = await fetch(url, { headers: { "X-API-KEY": apiKey } });
   if (!res.ok) return null;
   const data = await res.json();
-  return data && data.data ? data.data.holder : null;
+  const value = data && data.data
+    ? (data.data.holder ??
+       data.data.holders ??
+       data.data.holderCount ??
+       data.data.holdersCount ??
+       data.data.holder_count ??
+       data.data.holders_count)
+    : null;
+  if (value === null || value === undefined) return null;
+  const num = Number(value);
+  return Number.isFinite(num) ? num : null;
 }
 
 async function fetchDistributionPool() {
