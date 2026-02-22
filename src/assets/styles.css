@@ -853,10 +853,6 @@ pre.mermaid {
   line-height: 1.6;
 }
 
-.results-intro {
-  margin-bottom: 22px;
-}
-
 .results-meta {
   display: grid;
   gap: 16px;

@@ -4,6 +4,7 @@ const SOLANA_RPC = "https://api.mainnet-beta.solana.com";
 
 let currentLang = "en";
 let I18N = {};
+let introController = null;
 
 // TODO: If a key is missing in i18n JSON, show a visible placeholder.
 function missingKey(key) {
@@ -84,6 +85,10 @@ function startIntroSequence() {
 
   const getLine = (n) => I18N[`intro.l${n}`] || missingKey(`intro.l${n}`);
   const lines = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
+
+  if (introController && introController.cancel) {
+    introController.cancel();
+  }
 
   document.documentElement.classList.add("intro-active");
   let timerId = null;
@@ -214,6 +219,13 @@ function startIntroSequence() {
       finishIntro();
     });
   }
+
+  introController = {
+    cancel: () => {
+      cancelled = true;
+      if (timerId) clearTimeout(timerId);
+    }
+  };
 
   let idx = 0;
   function nextStep() {
