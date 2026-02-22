@@ -853,6 +853,71 @@ pre.mermaid {
   line-height: 1.6;
 }
 
+.results-intro {
+  margin-bottom: 22px;
+}
+
+.results-meta {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-top: 16px;
+}
+
+.results-details {
+  margin-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 12px;
+}
+
+.results-details summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+  list-style: none;
+}
+
+.results-details summary::marker {
+  display: none;
+}
+
+.results-details summary::after {
+  content: "＋";
+  margin-left: 6px;
+}
+
+.results-details[open] summary::after {
+  content: "－";
+}
+
+.results-details-body {
+  margin-top: 12px;
+  display: grid;
+  gap: 12px;
+}
+
+.results-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.results-images {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: 12px;
+}
+
+.results-images img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(12, 20, 32, 0.6);
+}
+
 .coef-table {
   margin-top: 12px;
 }

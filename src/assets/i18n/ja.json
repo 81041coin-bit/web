@@ -213,5 +213,21 @@
   "intro.l17": "社会を変える試みだ。",
   "prologue.l17": "社会を変える試みだ。",
   "intro.l18": "From Meme to Movement",
-  "prologue.l18": "From Meme to Movement"
+  "prologue.l18": "From Meme to Movement",
+  "results.intro.title": "私たちの取り組みについて",
+  "results.intro.body": "本プロジェクトでは、社会課題への具体的なアクションとして寄付活動を行っています。その実績と使途について、透明性をもって公開していきます。",
+  "results.intro.sub": "このページは、これまでの寄付実績を記録し、今後も継続的に更新していくアーカイブです。",
+  "results.archive.title": "第1回 寄付実績",
+  "results.archive.recipient.label": "■ 寄付先",
+  "results.archive.recipient.value": "公益社団法人 全国被害者支援ネットワーク",
+  "results.archive.amount.label": "■ 寄付金額",
+  "results.archive.amount.value": "81,000円",
+  "results.archive.date.label": "■ 寄付日",
+  "results.archive.date.value": "令和8年2月9日",
+  "results.archive.tap": "タップで詳細へ",
+  "results.detail.title": "第1回 寄付実績",
+  "results.detail.use.title": "寄付金の使途について",
+  "results.detail.use.lead": "今回の寄付金は、以下の活動に活用される予定です。",
+  "results.detail.use.items": "<li>法人の運営基盤の強化</li><li>広報・啓発活動の推進</li><li>犯罪被害相談員の育成および支援体制の充実</li>",
+  "results.detail.use.note": "犯罪被害者支援は、継続的な体制づくりと人材育成が不可欠な分野です。本寄付が、必要な支援が必要な人に届く仕組みづくりの一助となることを願っています。"
 }

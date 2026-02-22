@@ -215,5 +215,21 @@
   "intro.l17": "It is an attempt to change society.",
   "prologue.l17": "It is an attempt to change society.",
   "intro.l18": "From Meme to Movement",
-  "prologue.l18": "From Meme to Movement"
+  "prologue.l18": "From Meme to Movement",
+  "results.intro.title": "About Our Initiatives",
+  "results.intro.body": "This project carries out donation activities as a concrete action to address social issues.We are committed to maintaining transparency by publicly disclosing our donation records and how the funds are used.",
+  "results.intro.sub": "This page serves as an archive of our past donations and will be continuously updated.",
+  "results.archive.title": "1st Donation Record",
+  "results.archive.recipient.label": "■ Recipient",
+  "results.archive.recipient.value": "National Association for Crime Victim Support (Public Interest Incorporated Association)",
+  "results.archive.amount.label": "■ Donation Amount",
+  "results.archive.amount.value": "81,000 JPY",
+  "results.archive.date.label": "■ Date of Donation",
+  "results.archive.date.value": "February 9, Reiwa 8 (2026)",
+  "results.archive.tap": "1st Donation Record",
+  "results.detail.title": "1st Donation Record",
+  "results.detail.use.title": "Use of Donation Funds",
+  "results.detail.use.lead": "The donated funds are planned to be used for the following purposes:",
+  "results.detail.use.items": "<li>Strengthening the organization’s operational foundation</li><li>Promotion of public awareness and educational activities</li><li>Training of crime victim support counselors and enhancement of support systems</li>",
+  "results.detail.use.note": "Support for crime victims requires continuous organizational development and human resource training.We hope that this donation will contribute to building a system where necessary support reaches those who need it."
 }

@@ -215,5 +215,21 @@
   "intro.l17": "这是改变社会的尝试。",
   "prologue.l17": "这是改变社会的尝试。",
   "intro.l18": "From Meme to Movement",
-  "prologue.l18": "From Meme to Movement"
+  "prologue.l18": "From Meme to Movement",
+  "results.intro.title": "关于我们的行动",
+  "results.intro.body": "本项目通过捐赠活动，作为应对社会问题的具体行动。我们将秉持透明原则，公开捐赠记录及资金用途。",
+  "results.intro.sub": "本页面用于记录历次捐赠情况，并将持续更新。",
+  "results.archive.title": "第1次捐赠记录",
+  "results.archive.recipient.label": "■ 捐赠对象",
+  "results.archive.recipient.value": "公益社团法人 全国被害者支援网络",
+  "results.archive.amount.label": "■ 捐赠金额",
+  "results.archive.amount.value": "81,000日元",
+  "results.archive.date.label": "■ 捐赠日期",
+  "results.archive.date.value": "令和8年2月9日（2026年2月9日）",
+  "results.archive.tap": "第1次捐赠记录",
+  "results.detail.title": "第1次捐赠记录",
+  "results.detail.use.title": "捐赠资金用途",
+  "results.detail.use.lead": "本次捐赠资金计划用于以下方面：",
+  "results.detail.use.items": "<li>加强机构运营基础</li><li>推进宣传与社会启发活动</li><li>培养犯罪受害者咨询员并完善支援体系</li>",
+  "results.detail.use.note": "对犯罪受害者的支援需要持续的组织建设与人才培养。我们希望本次捐赠能够帮助构建一个让有需要的人及时获得支援的社会机制。"
 }
