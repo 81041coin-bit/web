@@ -186,6 +186,7 @@ async function detectLang() {
       applyI18n();
       startPrologue();
       startIntroSequence();
+      buildTradeSteps();
       renderMermaid();
       return;
     } catch (_) {}
