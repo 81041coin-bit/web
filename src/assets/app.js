@@ -43,6 +43,8 @@ function applyI18n() {
   document.querySelectorAll("[data-lang]").forEach((btn) => {
     btn.classList.toggle("active", btn.getAttribute("data-lang") === currentLang);
   });
+
+  buildFaqAccordion();
 }
 
 function startPrologue() {
@@ -302,6 +304,37 @@ function buildTradeSteps() {
     introEl.innerHTML = "";
   }
   stepsEl.innerHTML = cards.join("");
+}
+
+function buildFaqAccordion() {
+  const el = document.querySelector('[data-i18n="faq.body"]');
+  if (!el || !I18N["faq.body"]) return;
+  const raw = I18N["faq.body"];
+  const lines = raw
+    .split("<br>")
+    .map((line) => line.trim())
+    .filter((line) => line);
+  const sections = [];
+  let current = null;
+  const questionRegex = /^\d+\.\s+|^Q\d+/i;
+  lines.forEach((line) => {
+    if (questionRegex.test(line)) {
+      if (current) sections.push(current);
+      current = { q: line, a: [] };
+    } else if (current) {
+      current.a.push(line);
+    }
+  });
+  if (current) sections.push(current);
+
+  if (!sections.length) return;
+  const html = sections
+    .map((item) => {
+      const answer = item.a.join(" ");
+      return `<details><summary>${item.q}</summary><div class="faq-answer">${answer}</div></details>`;
+    })
+    .join("");
+  el.innerHTML = `<div class="faq-list">${html}</div>`;
 }
 
 function renderMermaid() {
