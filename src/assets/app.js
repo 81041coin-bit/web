@@ -159,7 +159,9 @@ function buildTradeSteps() {
     const imagesHtml = images.length
       ? `<div class="trade-step-images">${images.map((src) => `<img src="${src}" alt="${step.title}">`).join("")}</div>`
       : "";
-    return `<div class="trade-step"><h3>${step.title}</h3><div class="step-body">${step.body.join("<br>")}</div>${imagesHtml}</div>`;
+    const listItems = step.body.map((line) => `<li>${line}</li>`).join("");
+    const bodyHtml = `<ul class="step-list">${listItems}</ul>`;
+    return `<div class="trade-step"><h3>${step.title}</h3>${bodyHtml}${imagesHtml}</div>`;
   }).join("");
 }
 

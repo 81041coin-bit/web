@@ -662,6 +662,18 @@ pre.mermaid {
   line-height: 1.6;
 }
 
+.step-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.step-list li {
+  margin: 6px 0;
+}
+
 .trade-step-images {
   margin-top: 12px;
   display: grid;
