@@ -549,15 +549,12 @@ async function fetchSupply() {
     const data = await res.json();
     if (!data || !data.ok) throw new Error("supply");
 
-    const totalEl = document.getElementById("supply-total");
     const pctEl = document.getElementById("supply-01");
-    const updatedEl = document.getElementById("supply-updated");
+    const updatedLabel = I18N["distribution.table.updated"] || missingKey("distribution.table.updated");
 
-    if (totalEl) totalEl.textContent = formatNumber(data.totalSupply, 6);
     if (pctEl) pctEl.textContent = formatNumber(data.supply01pct, 6);
-    if (updatedEl) updatedEl.textContent = formatJst(new Date(data.asOf));
-
-    if (statusEl) statusEl.textContent = "";
+    const updatedText = formatJst(new Date(data.asOf));
+    if (statusEl) statusEl.textContent = updatedText ? `${updatedLabel}: ${updatedText}` : "";
   } catch (_) {
     if (statusEl) statusEl.textContent = I18N["distribution.table.error"] || missingKey("distribution.table.error");
   }
