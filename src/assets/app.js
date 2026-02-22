@@ -123,23 +123,44 @@ function buildTradeSteps() {
   if (!source || !stepsEl || !introEl) return;
 
   const html = source.innerHTML || source.textContent || "";
-  const lines = html.split("<br>").map((line) => line.trim()).filter(Boolean);
+  const lines = html
+    .split("<br>")
+    .map((line) => line.trim())
+    .filter((line) => line && !/(━{5,}|─{5,}|—{5,})/.test(line));
   const stepRegex = /(STEP\\s*\\d+|【STEP\\s*\\d+】|STEP\\s*\\d+：|STEP\\s*\\d+\\s*：|STEP\\s*\\d+\\s*\\-|STEP\\s*\\d+\\s*：)/i;
-  const blockRegex = /(━{5,}|─{5,}|—{5,})/;
 
-  const blocks = [];
-  let currentBlock = [];
-  lines.forEach((line) => {
-    if (blockRegex.test(line)) {
-      if (currentBlock.length) {
-        blocks.push(currentBlock);
-        currentBlock = [];
-      }
-      return;
+  const sectionPatterns = [
+    { id: "step1", regex: [/STEP\\s*1/i, /【STEP\\s*1】/i] },
+    { id: "step2", regex: [/STEP\\s*2/i, /【STEP\\s*2】/i] },
+    { id: "step3", regex: [/STEP\\s*3/i, /【STEP\\s*3】/i] },
+    { id: "step4", regex: [/STEP\\s*4/i, /【STEP\\s*4】/i] },
+    { id: "step5", regex: [/STEP\\s*5/i, /【STEP\\s*5】/i] },
+    { id: "step6", regex: [/STEP\\s*6/i, /【STEP\\s*6】/i] },
+    { id: "step7", regex: [/STEP\\s*7/i, /【STEP\\s*7】/i] },
+    { id: "step8", regex: [/STEP\\s*8/i, /【STEP\\s*8】/i] },
+    { id: "step9", regex: [/STEP\\s*9/i, /【STEP\\s*9】/i] },
+    { id: "confirm", regex: [/購入完了後の確認/, /After purchase/i, /Purchase complete/i, /购买完成后/i] },
+    { id: "faq", regex: [/よくある質問/, /FAQ/i, /常见问题/i] },
+    { id: "important", regex: [/重要な注意事項/, /Important/i, /重要注意事项/i] },
+    { id: "disclaimer", regex: [/免責事項/, /Disclaimer/i, /免责声明/i] },
+  ];
+
+  const found = [];
+  sectionPatterns.forEach((pattern) => {
+    const idx = lines.findIndex((line) => pattern.regex.some((rx) => rx.test(line)));
+    if (idx !== -1) {
+      found.push({ idx, title: lines[idx] });
     }
-    currentBlock.push(line);
   });
-  if (currentBlock.length) blocks.push(currentBlock);
+
+  found.sort((a, b) => a.idx - b.idx);
+  const sections = [];
+  for (let i = 0; i < found.length; i += 1) {
+    const start = found[i].idx;
+    const end = i + 1 < found.length ? found[i + 1].idx : lines.length;
+    const bodyLines = lines.slice(start + 1, end);
+    sections.push({ title: found[i].title, body: bodyLines });
+  }
 
   const imageMap = {
     "3": ["/assets/img/step3.jpeg"],
@@ -151,13 +172,9 @@ function buildTradeSteps() {
   };
 
   const cards = [];
-  const firstBlocks = blocks.slice(0, 9);
-  const extraBlocks = blocks.slice(9, 13);
-
-  firstBlocks.forEach((block, idx) => {
-    const titleLine = block.find((line) => stepRegex.test(line));
-    const title = titleLine ? titleLine.replace(/━+/g, "").trim() : `STEP ${idx + 1}`;
-    const bodyLines = titleLine ? block.filter((line) => line !== titleLine) : block;
+  sections.forEach((section) => {
+    const title = section.title.replace(/━+/g, "").trim();
+    const bodyLines = section.body;
     const stepMatch = title.match(/STEP\\s*(\\d+)/i);
     const stepNum = stepMatch ? stepMatch[1] : null;
     const images = stepNum && imageMap[stepNum] ? imageMap[stepNum] : [];
@@ -167,23 +184,6 @@ function buildTradeSteps() {
     const listItems = bodyLines.map((line) => `<li>${line}</li>`).join("");
     const bodyHtml = `<ul class="step-list">${listItems}</ul>`;
     cards.push(`<div class="trade-step"><h3>${title}</h3>${bodyHtml}${imagesHtml}</div>`);
-  });
-
-  extraBlocks.forEach((block, idx) => {
-    const titleLine = block.find((line) =>
-      line.includes("購入完了後の確認") ||
-      line.includes("よくある質問") ||
-      line.includes("重要な注意事項") ||
-      line.includes("免責事項") ||
-      line.includes("Disclaimer") ||
-      line.includes("FAQ")
-    );
-    const fallbackTitles = ["購入完了後の確認", "よくある質問", "重要な注意事項", "【免責事項】"];
-    const title = titleLine ? titleLine.replace(/━+/g, "").trim() : (fallbackTitles[idx] || "その他");
-    const bodyLines = titleLine ? block.filter((line) => line !== titleLine) : block;
-    const listItems = bodyLines.map((line) => `<li>${line}</li>`).join("");
-    const bodyHtml = `<ul class="step-list">${listItems}</ul>`;
-    cards.push(`<div class="trade-step"><h3>${title}</h3>${bodyHtml}</div>`);
   });
 
   introEl.innerHTML = "";
