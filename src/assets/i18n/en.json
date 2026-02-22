@@ -187,7 +187,7 @@
   "distribution.section1.title": "1. Purpose of the System",
   "distribution.section1.body": "The success of this project requires the long-term support of investors.<br>When this project is achieved, all coins held by the management will be returned to the holders who have supported us so far.<br>The longer the resolution takes, the more the distribution pool accumulates. By adding incentives based on holding duration, we encourage continuous growth of the coin and accelerate project completion.",
   "distribution.section2.title": "2. How Are the Rewards Funded?",
-  "distribution.section2.body": "The reward source (distribution pool) is an accumulation model.<br>Each month, 10% of revenue is allocated to the \"Arrest-Time Distribution Pool\".<br>No interim distributions are made.<br>In other words, the pool increases as time passes.",
+  "distribution.section2.body": "The reward source is an accumulation model.<br>Each month, 10% of revenue is allocated to the \"Arrest-Time Distribution Pool\".<br>No interim distributions are made.<br>In other words, the pool increases as time passes.",
   "distribution.section3.title": "3. Eligibility for Receiving Distribution",
   "distribution.section3.body": "To qualify for distribution at the time of arrest:<br>A holder must continuously maintain at least 0.1% of the total supply<br>Only those who meet this threshold are eligible for rewards.",
   "distribution.section4.title": "4. Incentive for Long-Term Holding",
@@ -202,5 +202,6 @@
   "distribution.section8.body": "This initiative:<br>Rewards holders who have supported the project long-term<br>Addresses the reality that meme coins often end as short-lived hype<br>Creates a structure designed to build sustained commitment rather than temporary speculation",
   "distribution.section.count": 8,
   "distribution.section9.title": "7.5",
-  "distribution.section9.body": "6+ months"
+  "distribution.section9.body": "6+ months",
+  "distribution.table.supplySuffix": " or more"
 }

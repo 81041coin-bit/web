@@ -560,12 +560,13 @@ async function fetchSupply() {
       supplyText = formatNumber(data.supply01pct, 6);
     }
     if (pctEl) {
+      const suffix = I18N["distribution.table.supplySuffix"] || "";
       if (Number.isFinite(data.supply01pct)) {
-        pctEl.textContent = `${Math.floor(data.supply01pct).toLocaleString()}枚以上`;
+        pctEl.textContent = `${Math.floor(data.supply01pct).toLocaleString()}${suffix}`;
       } else if (data.supply01pctStr) {
         const rounded = Math.floor(Number(data.supply01pctStr));
         pctEl.textContent = Number.isFinite(rounded)
-          ? `${rounded.toLocaleString()}枚以上`
+          ? `${rounded.toLocaleString()}${suffix}`
           : data.supply01pctStr;
       } else {
         pctEl.textContent = I18N["market.na"] || "—";
@@ -614,9 +615,10 @@ async function fetchSupplyDirect() {
     const supply01pctStr = formatFromBigInt(amountBig, decimals + 3);
     const pctEl = document.getElementById("supply-01");
     if (pctEl) {
+      const suffix = I18N["distribution.table.supplySuffix"] || "";
       const rounded = Math.floor(Number(supply01pctStr));
       pctEl.textContent = Number.isFinite(rounded)
-        ? `${rounded.toLocaleString()}枚以上`
+        ? `${rounded.toLocaleString()}${suffix}`
         : supply01pctStr;
     }
     const statusEl = document.getElementById("supply-status");

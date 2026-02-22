@@ -187,7 +187,7 @@
   "distribution.section1.title": "1. 制度目的",
   "distribution.section1.body": "本项目的成功离不开投资者的长期支持。<br>当本项目达成时，运营方持有的全部代币将返还给一直支持我们的持有者。<br>问题解决时间越长，分配池的累积越多。通过对持有时间设置激励，促进代币持续成长，并加速项目达成。",
   "distribution.section2.title": "2. 奖励资金如何积累？",
-  "distribution.section2.body": "奖励来源（分配池）采用累积式机制。<br>每月将收入的10%计入「逮捕时分配池」。<br>不进行中途分配。<br>也就是说，时间越长，资金池越大。",
+  "distribution.section2.body": "奖励来源采用累积式机制。<br>每月将收入的10%计入「逮捕时分配池」。<br>不进行中途分配。<br>也就是说，时间越长，资金池越大。",
   "distribution.section3.title": "3. 可获得分配的资格条件",
   "distribution.section3.body": "必须持续持有总供应量的0.1%以上。<br>只有满足该标准的持有者，才具备获得分配的资格。",
   "distribution.section4.title": "4. 对长期持有的激励机制",
@@ -202,5 +202,6 @@
   "distribution.section8.body": "本制度：<br>回馈长期支持项目的持有者<br>对抗 Meme Coin 常见的短期炒作生命周期<br>建立以长期信任为核心的可持续机制",
   "distribution.section.count": 8,
   "distribution.section9.title": "7.5",
-  "distribution.section9.body": "6个月以上"
+  "distribution.section9.body": "6个月以上",
+  "distribution.table.supplySuffix": "枚以上"
 }
