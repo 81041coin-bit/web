@@ -545,9 +545,7 @@ async function fetchSupply() {
   const statusEl = document.getElementById("supply-status");
   if (statusEl) statusEl.textContent = I18N["distribution.table.loading"] || missingKey("distribution.table.loading");
   try {
-    const ok = await fetchSupplyDirect();
-    if (ok) return;
-    const res = await fetch("/api/supply");
+    const res = await fetch("/api/supply", { cache: "no-store" });
     if (!res.ok) throw new Error("supply");
     const data = await res.json();
     if (!data || !data.ok) throw new Error("supply");
@@ -556,16 +554,17 @@ async function fetchSupply() {
     const updatedLabel = I18N["distribution.table.updated"] || missingKey("distribution.table.updated");
 
     let supplyText = null;
-    if (Number.isFinite(data.supply01pct)) {
-      supplyText = formatNumber(data.supply01pct, 6);
-    } else if (data.supply01pctStr) {
+    if (data.supply01pctStr) {
       supplyText = data.supply01pctStr;
+    } else if (Number.isFinite(data.supply01pct)) {
+      supplyText = formatNumber(data.supply01pct, 6);
     }
     if (pctEl) pctEl.textContent = supplyText ?? (I18N["market.na"] || "—");
     const updatedText = formatJst(new Date(data.asOf));
     if (statusEl) statusEl.textContent = updatedText ? `${updatedLabel}: ${updatedText}` : "";
   } catch (_) {
-    if (statusEl) {
+    const ok = await fetchSupplyDirect();
+    if (!ok && statusEl) {
       statusEl.textContent = I18N["distribution.table.error"] || missingKey("distribution.table.error");
     }
   }
