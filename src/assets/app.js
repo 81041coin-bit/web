@@ -191,11 +191,14 @@ function buildTradeSteps() {
 
   const imageMap = {
     "3": ["/assets/img/step3.jpeg"],
-    "4": ["/assets/img/step4.jpeg", "/assets/img/step4-2.jpeg"],
+    "4": ["/assets/img/step4.jpeg"],
+    "4-2": ["/assets/img/step4-2.jpeg"],
     "5": ["/assets/img/step5.jpeg"],
-    "7": ["/assets/img/step7-1.jpeg", "/assets/img/step7-2.jpeg"],
-    "8": ["/assets/img/step8-1.jpeg"],
-    "9": ["/assets/img/step9-1.jpeg"]
+    "7-1": ["/assets/img/step7-1.jpeg"],
+    "7-2": ["/assets/img/step7-2.jpeg"],
+    "8-1": ["/assets/img/step8-1.jpeg"],
+    "8-2": ["/assets/img/step9-1.jpeg"],
+    "9": ["/assets/img/step9-1.jpeg"],
   };
 
   const cards = [];
@@ -209,18 +212,27 @@ function buildTradeSteps() {
       .filter((line) => line && !/画像を表示/.test(line));
     const stepMatch = title.match(/(?:STEP|步骤)\\s*(\\d+)/i);
     const stepNum = stepMatch ? stepMatch[1] : null;
-    const images = stepNum && imageMap[stepNum] ? imageMap[stepNum] : [];
-    const imagesHtml = images.length
-      ? `<div class="trade-step-images">${images.map((src) => `<img src="${src}" alt="${title}">`).join("")}</div>`
-      : "";
+    const images = [];
+    if (stepNum && imageMap[stepNum]) images.push(...imageMap[stepNum]);
     const listItems = [];
     let caValue = null;
     const linkify = (text) =>
       text.replace(/(https?:\/\/[^\s)]+)/g, (match) =>
         `<a href="${match}" target="_blank" rel="noopener">${match}</a>`
       );
+    const normalizeDigits = (value) =>
+      value.replace(/[０-９]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0xFF10 + 0x30));
+    const imageInstrRegex = /Step\\s*([0-9０-９]+)\\s*[-―ー–—]?\\s*([0-9０-９]+)?\\s*の画像を表示/i;
     bodyLines.forEach((line) => {
       let cleaned = line.replace(/（[^）]*簡単にコピーできる形にして[^）]*）/g, "").trim();
+      const imageMatch = cleaned.match(imageInstrRegex);
+      if (imageMatch) {
+        const main = normalizeDigits(imageMatch[1]);
+        const sub = imageMatch[2] ? normalizeDigits(imageMatch[2]) : null;
+        const key = sub ? `${main}-${sub}` : main;
+        if (imageMap[key]) images.push(...imageMap[key]);
+        return;
+      }
       const caMatch = cleaned.match(/CA\s*[:：]\s*([A-Za-z0-9]+)/);
       if (caMatch) {
         caValue = caMatch[1];
@@ -234,6 +246,9 @@ function buildTradeSteps() {
     const caLabel = I18N["howto.caLabel"] || "CA";
     const copyHtml = caValue
       ? `<div class="copy-row"><div class="muted">${caLabel}</div><div class="copy-box"><input type="text" readonly value="${caValue}" aria-label="CA" /><button type="button" class="button" data-copy="${caValue}">${copyLabel}</button></div><div class="copy-status">${copyHint}</div></div>`
+      : "";
+    const imagesHtml = images.length
+      ? `<div class="trade-step-images">${images.map((src) => `<img src="${src}" alt="${title}">`).join("")}</div>`
       : "";
     cards.push(`<div class="trade-step"><h3>${title}</h3>${listHtml}${copyHtml}${imagesHtml}</div>`);
   });
