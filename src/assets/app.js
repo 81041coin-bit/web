@@ -1,5 +1,6 @@
 const MARKET_INTERVAL_SEC = 30;
 const SUPPLY_INTERVAL_MS = 60000;
+const SOLANA_RPC = "https://api.mainnet-beta.solana.com";
 
 let currentLang = "en";
 let I18N = {};
@@ -562,7 +563,43 @@ async function fetchSupply() {
     const updatedText = formatJst(new Date(data.asOf));
     if (statusEl) statusEl.textContent = updatedText ? `${updatedLabel}: ${updatedText}` : "";
   } catch (_) {
-    if (statusEl) statusEl.textContent = I18N["distribution.table.error"] || missingKey("distribution.table.error");
+    const ok = await fetchSupplyDirect();
+    if (!ok && statusEl) {
+      statusEl.textContent = I18N["distribution.table.error"] || missingKey("distribution.table.error");
+    }
+  }
+}
+
+async function fetchSupplyDirect() {
+  try {
+    const body = {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "getTokenSupply",
+      params: ["9SbNtqtnXbSGKvQv6G1XMzmoiEMNHoNWQNtMz7sbpump"]
+    };
+    const res = await fetch(SOLANA_RPC, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) throw new Error("rpc");
+    const data = await res.json();
+    const value = data && data.result && data.result.value ? data.result.value : null;
+    if (!value) throw new Error("rpc");
+    const supplyStr = value.uiAmountString || value.uiAmount;
+    const supplyNum = Number(supplyStr);
+    if (!Number.isFinite(supplyNum)) throw new Error("rpc");
+    const pct = supplyNum * 0.001;
+    const pctEl = document.getElementById("supply-01");
+    if (pctEl) pctEl.textContent = formatNumber(pct, 6);
+    const statusEl = document.getElementById("supply-status");
+    const updatedLabel = I18N["distribution.table.updated"] || missingKey("distribution.table.updated");
+    const updatedText = formatJst(new Date());
+    if (statusEl) statusEl.textContent = `${updatedLabel}: ${updatedText}`;
+    return true;
+  } catch (_) {
+    return false;
   }
 }
 
