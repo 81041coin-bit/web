@@ -163,6 +163,95 @@ function buildTradeSteps() {
   }).join("");
 }
 
+function buildDistributionSections() {
+  const source = document.getElementById("distribution-body-source");
+  const container = document.getElementById("distribution-content");
+  if (!source || !container) return;
+  const html = source.innerHTML || "";
+  const lines = html.split("<br>");
+  const sectionRegex = /^([0-9０-９]+)[\\.．]/;
+
+  const sections = [];
+  let current = null;
+  const intro = [];
+
+  lines.forEach((line) => {
+    const cleaned = line.trim();
+    if (!cleaned) return;
+    if (sectionRegex.test(cleaned)) {
+      current = { title: cleaned, body: [] };
+      sections.push(current);
+    } else if (current) {
+      current.body.push(cleaned);
+    } else {
+      intro.push(cleaned);
+    }
+  });
+
+  const cards = [];
+  if (intro.length) {
+    cards.push(`<div class="content-card"><div class="card-body">${intro.join("<br>")}</div></div>`);
+  }
+  sections.forEach((section) => {
+    cards.push(
+      `<div class="content-card"><h3>${section.title}</h3><div class="card-body">${section.body.join("<br>")}</div></div>`
+    );
+  });
+  container.innerHTML = cards.join("");
+}
+
+function buildResultsCards() {
+  const source = document.getElementById("results-body-source");
+  const container = document.getElementById("results-content");
+  if (!source || !container) return;
+  const html = source.innerHTML || "";
+  const lines = html.split("<br>");
+  const intro = [];
+  const archive = [];
+  let inArchive = false;
+  lines.forEach((line) => {
+    const cleaned = line.trim();
+    if (!cleaned) return;
+    if (cleaned.includes("アーカイブ") || cleaned.includes("Archive")) {
+      inArchive = true;
+    }
+    (inArchive ? archive : intro).push(cleaned);
+  });
+
+  const cards = [];
+  if (intro.length) {
+    cards.push(`<div class="content-card"><div class="card-body">${intro.join("<br>")}</div></div>`);
+  }
+  if (archive.length) {
+    cards.push(`<div class="content-card"><div class="card-body">${archive.join("<br>")}</div></div>`);
+  }
+  container.innerHTML = cards.join("");
+}
+
+function buildFaqAccordion() {
+  const source = document.getElementById("faq-body-source");
+  const container = document.getElementById("faq-content");
+  if (!source || !container) return;
+  const html = source.innerHTML || "";
+  const lines = html.split("<br>");
+  const qRegex = /^\\d+\\.|^Q\\d+/i;
+  const items = [];
+  let current = null;
+  lines.forEach((line) => {
+    const cleaned = line.trim();
+    if (!cleaned) return;
+    if (qRegex.test(cleaned)) {
+      current = { q: cleaned, a: [] };
+      items.push(current);
+    } else if (current) {
+      current.a.push(cleaned);
+    }
+  });
+  container.innerHTML = items.map((item) => (
+    `<details><summary>${item.q}</summary><div class="answer">${item.a.join("<br>")}</div></details>`
+  )).join("");
+}
+
 function renderMermaid() {
   if (!window.mermaid) return;
   try {
@@ -205,6 +294,9 @@ async function detectLang() {
   startPrologue();
   startIntroSequence();
   buildTradeSteps();
+  buildDistributionSections();
+  buildResultsCards();
+  buildFaqAccordion();
   renderMermaid();
 }
 
@@ -220,6 +312,9 @@ function bindLangSwitch() {
       startPrologue();
       startIntroSequence();
       buildTradeSteps();
+      buildDistributionSections();
+      buildResultsCards();
+      buildFaqAccordion();
       renderMermaid();
       if (document.getElementById("market-section")) {
         fetchMarket();
