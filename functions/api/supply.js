@@ -21,8 +21,9 @@ async function fetchSupply() {
   const value = data && data.result && data.result.value ? data.result.value : null;
   if (!value) throw new Error("rpc");
   const decimals = Number(value.decimals || 0);
-  const amountStr = String(value.amount || "0");
-  const amountBig = BigInt(amountStr);
+  const amountStr = value.amount;
+  if (!amountStr) throw new Error("rpc");
+  const amountBig = BigInt(String(amountStr));
   const uiAmountString = value.uiAmountString || value.uiAmount || null;
 
   function formatFromBigInt(bigValue, decimalPlaces) {
@@ -39,9 +40,6 @@ async function fetchSupply() {
   const totalSupply = Number(totalSupplyStr);
   const supply01pctStr = formatFromBigInt(amountBig, decimals + 3);
   const supply01pct = Number(supply01pctStr);
-
-  if (!Number.isFinite(totalSupply)) throw new Error("rpc");
-  if (!Number.isFinite(supply01pct)) throw new Error("rpc");
   return { totalSupply, totalSupplyStr, supply01pct, supply01pctStr, decimals };
 }
 
