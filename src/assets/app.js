@@ -587,12 +587,22 @@ async function fetchSupplyDirect() {
     const data = await res.json();
     const value = data && data.result && data.result.value ? data.result.value : null;
     if (!value) throw new Error("rpc");
-    const supplyStr = value.uiAmountString || value.uiAmount;
-    const supplyNum = Number(supplyStr);
-    if (!Number.isFinite(supplyNum)) throw new Error("rpc");
-    const pct = supplyNum * 0.001;
+    const decimals = Number(value.decimals || 0);
+    const amountStr = value.amount;
+    if (!amountStr) throw new Error("rpc");
+    const amountBig = BigInt(String(amountStr));
+    const formatFromBigInt = (bigValue, decimalPlaces) => {
+      const isNegative = bigValue < 0n;
+      const raw = (isNegative ? -bigValue : bigValue).toString();
+      if (decimalPlaces === 0) return (isNegative ? "-" : "") + raw;
+      const padded = raw.padStart(decimalPlaces + 1, "0");
+      const intPart = padded.slice(0, -decimalPlaces);
+      const fracPart = padded.slice(-decimalPlaces).replace(/0+$/, "") || "0";
+      return `${isNegative ? "-" : ""}${intPart}.${fracPart}`;
+    };
+    const supply01pctStr = formatFromBigInt(amountBig, decimals + 3);
     const pctEl = document.getElementById("supply-01");
-    if (pctEl) pctEl.textContent = formatNumber(pct, 6);
+    if (pctEl) pctEl.textContent = supply01pctStr;
     const statusEl = document.getElementById("supply-status");
     const updatedLabel = I18N["distribution.table.updated"] || missingKey("distribution.table.updated");
     const updatedText = formatJst(new Date());
