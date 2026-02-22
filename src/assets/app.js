@@ -75,16 +75,83 @@ function startPrologue() {
 function startIntroSequence() {
   const intro = document.getElementById("intro");
   if (!intro) return;
-  const lines = Array.from(intro.querySelectorAll(".intro-line"));
-  if (!lines.length) return;
+  const primaryEl = intro.querySelector(".intro-line.primary");
+  const secondaryEl = intro.querySelector(".intro-line.secondary");
+  if (!primaryEl || !secondaryEl) return;
+
+  const demonEl = intro.querySelector(".intro-demon");
+  const heavenEl = intro.querySelector(".intro-heaven");
+
+  const getLine = (n) => I18N[`intro.l${n}`] || missingKey(`intro.l${n}`);
+  const lines = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
 
   document.documentElement.classList.add("intro-active");
-  let index = 0;
-  const hideDelayMs = 1200;
-  const stepMs = 3200;
   let timerId = null;
   let cancelled = false;
   const skipBtn = intro.querySelector(".intro-skip");
+
+  const steps = [
+    { light: "dim", primary: 1, fast: false, hold: 2000 },
+    { secondary: 2, hold: 1800 },
+    { fadeOut: true, hold: 900 },
+    { light: "dark", hold: 600 },
+    { primary: 3, demon: "show", demonZoom: true, fast: true, hold: 1500 },
+    { primary: 4, secondary: 5, hold: 2000 },
+    { fadeOut: true, hold: 900 },
+    { primary: 6, hold: 1700 },
+    { fadeOut: true, hold: 900 },
+    { primary: 7, hold: 1200 },
+    { secondary: 8, hold: 1200 },
+    { secondary: 9, hold: 1200 },
+    { secondary: 10, hold: 1200 },
+    { fadeOut: true, hold: 900 },
+    { primary: 11, hold: 2000 },
+    { fadeOut: true, hold: 900 },
+    { light: "strong", heaven: "show", heavenZoom: true, primary: 12, hold: 2000 },
+    { fadeOut: true, hold: 900 },
+    { primary: 13, hold: 1400 },
+    { secondary: 14, hold: 1400 },
+    { fadeOut: true, hold: 900 },
+    { primary: 15, hold: 1600 },
+    { fadeOut: true, hold: 900 },
+    { primary: 16, hold: 1600 },
+    { fadeOut: true, hold: 900 },
+    { primary: 17, hold: 1800, slow: true },
+    { fadeOut: true, hold: 1400 },
+    { primary: 18, final: true, hold: 2600 }
+  ];
+
+  function setLight(mode) {
+    intro.classList.remove("intro-dark", "intro-light-dim", "intro-light-strong");
+    if (mode === "dim") intro.classList.add("intro-light-dim");
+    else if (mode === "strong") intro.classList.add("intro-light-strong");
+    else intro.classList.add("intro-dark");
+  }
+
+  function setLine(el, text, show, fast, final) {
+    el.textContent = text || "";
+    el.classList.toggle("show", show);
+    el.classList.toggle("fast", !!fast);
+    el.classList.toggle("final", !!final);
+  }
+
+  function hideLines() {
+    primaryEl.classList.remove("show", "fast", "final");
+    secondaryEl.classList.remove("show", "fast", "final");
+    secondaryEl.textContent = "";
+  }
+
+  function setDemon(state) {
+    if (!demonEl) return;
+    demonEl.classList.toggle("show", state === "show");
+    demonEl.classList.toggle("zoom", state === "zoom");
+  }
+
+  function setHeaven(state) {
+    if (!heavenEl) return;
+    heavenEl.classList.toggle("show", state === "show");
+    heavenEl.classList.toggle("zoom", state === "zoom");
+  }
 
   function finishIntro() {
     intro.classList.add("hidden");
@@ -97,7 +164,7 @@ function startIntroSequence() {
       if (vision) {
         vision.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    }, hideDelayMs);
+    }, 1200);
   }
 
   if (skipBtn) {
@@ -107,31 +174,40 @@ function startIntroSequence() {
     });
   }
 
-  function showNext() {
+  let idx = 0;
+  function nextStep() {
     if (cancelled) return;
-    lines.forEach((line) => line.classList.remove("active"));
-    const current = lines[index];
-    if (current) {
-      current.classList.add("active");
-      if (current.classList.contains("intro-reveal")) {
-        intro.classList.add("reveal");
+    const step = steps[idx];
+    if (!step) return finishIntro();
+
+    if (step.light) setLight(step.light);
+    if (step.demon === "show") {
+      setDemon("show");
+      if (step.demonZoom) {
+        requestAnimationFrame(() => setDemon("zoom"));
       }
     }
-    index += 1;
-
-    if (index < lines.length) {
-      const lineNumber = index; // 1-based of the next line to show
-      const fastRange = lineNumber >= 2 && lineNumber <= 4;
-      const delay = fastRange ? 2200 : stepMs;
-      timerId = setTimeout(showNext, delay);
-    } else {
-      timerId = setTimeout(() => {
-        finishIntro();
-      }, stepMs);
+    if (step.heaven === "show") {
+      setHeaven("show");
+      if (step.heavenZoom) {
+        requestAnimationFrame(() => setHeaven("zoom"));
+      }
     }
+
+    if (step.fadeOut) {
+      hideLines();
+    } else {
+      const primaryText = step.primary ? lines[step.primary - 1] : primaryEl.textContent;
+      const secondaryText = step.secondary ? lines[step.secondary - 1] : secondaryEl.textContent;
+      if (step.primary) setLine(primaryEl, primaryText, true, step.fast, step.final);
+      if (step.secondary) setLine(secondaryEl, secondaryText, true, false, false);
+    }
+
+    idx += 1;
+    timerId = setTimeout(nextStep, step.hold || 1600);
   }
 
-  showNext();
+  nextStep();
 }
 
 function buildTradeSteps() {
