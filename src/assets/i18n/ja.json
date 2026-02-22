@@ -174,7 +174,7 @@
   "trade.section7.title": "STEP 7：「取引する」→「現物」を開く",
   "trade.section7.body": "<ul class=\"step-list\"><li>下メニューから「取引する」をタップ</li><li>2. 「BTC/USDT」と書いてあるところをタップ</li></ul><div class=\"trade-step-images\"><img src=\"/assets/img/step7-1.jpeg\" alt=\"STEP 7：「取引する」→「現物」を開く\"><img src=\"/assets/img/step7-2.jpeg\" alt=\"STEP 7：「取引する」→「現物」を開く\"></div>",
   "trade.section8.title": "STEP 8：市場一覧から「81041」を検索",
-  "trade.section8.body": "<ul class=\"step-list\"><li>検索欄に以下のコントラクトアドレス（CA）をペースト</li><li>CA: 9SbNtqtnXbSGKvQv6G1XMzmoiEMNHoNWQNtMz7sbpump（簡単にコピーできる形にして）</li><li>2. 「81041coin」をタップ</li><li>[ポイント]</li><li>コントラクトアドレスは必ずコピー&amp;ペーストしてください。</li><li>手入力すると間違える可能性があります。</li></ul><div class=\"trade-step-images\"><img src=\"/assets/img/step8-1.jpeg\" alt=\"STEP 8：市場一覧から「81041」を検索\"></div>",
+  "trade.section8.body": "<ul class=\"step-list\"><li>検索欄に以下のコントラクトアドレス（CA）をペースト</li><li>CA: 9SbNtqtnXbSGKvQv6G1XMzmoiEMNHoNWQNtMz7sbpump</li><li>2. 「81041coin」をタップ</li><li>[ポイント]</li><li>コントラクトアドレスは必ずコピー&amp;ペーストしてください。</li><li>手入力すると間違える可能性があります。</li></ul><div class=\"trade-step-images\"><img src=\"/assets/img/step8-1.jpeg\" alt=\"STEP 8：市場一覧から「81041」を検索\"></div>",
   "trade.section9.title": "STEP 9：81041coinを購入",
   "trade.section9.body": "<ul class=\"step-list\"><li>1. 注文方法 → 「成行」を選択</li><li>初心者は成行注文がおすすめ</li><li>2. 購入したい金額を入力</li><li>3. 「購入：81041」ボタンをタップ</li><li>4. 注文を確認して実行</li><li>[注文方法の説明]</li><li>■ 成行注文（初心者向け）</li><li>現在の市場価格ですぐに購入できます。</li><li>確実に購入したい場合はこちらを選択。</li><li>■ 指値注文（上級者向け）</li><li>指定した価格になったら購入する注文方法。</li><li>希望価格で購入したい場合はこちらを選択。</li></ul><div class=\"trade-step-images\"><img src=\"/assets/img/step9-1.jpeg\" alt=\"STEP 9：81041coinを購入\"></div>",
   "trade.section10.title": "購入完了後の確認",
