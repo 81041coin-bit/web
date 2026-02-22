@@ -54,17 +54,13 @@ body > * {
   position: fixed;
   inset: 0;
   background: #05070b;
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   z-index: 9999;
   transition: opacity 1.2s ease;
   opacity: 1;
-}
-
-.intro.enabled {
-  display: flex;
 }
 
 .intro.hidden {
@@ -395,6 +391,15 @@ nav a:hover {
   0% { opacity: 0; transform: translateY(10px); }
   20% { opacity: 1; transform: translateY(0); }
   100% { opacity: 1; }
+}
+
+.intro-done .prologue-cinematic .fade-line {
+  position: static;
+  opacity: 1;
+  transform: none;
+  animation: none;
+  display: block;
+  margin: 0 auto;
 }
 
 .prologue-cinematic .prologue-final {

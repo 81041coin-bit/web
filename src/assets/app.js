@@ -57,13 +57,6 @@ function startPrologue() {
 function startIntroSequence() {
   const intro = document.getElementById("intro");
   if (!intro) return;
-  const params = new URLSearchParams(window.location.search);
-  const enableIntro = params.get("intro") === "1";
-  if (!enableIntro) {
-    intro.remove();
-    return;
-  }
-  intro.classList.add("enabled");
   const lines = Array.from(intro.querySelectorAll(".intro-line"));
   if (!lines.length) return;
 
@@ -81,6 +74,7 @@ function startIntroSequence() {
     setTimeout(() => {
       intro.remove();
       document.documentElement.classList.remove("intro-active");
+      document.documentElement.classList.add("intro-done");
       const vision = document.getElementById("vision");
       if (vision) {
         vision.scrollIntoView({ behavior: "smooth", block: "start" });
