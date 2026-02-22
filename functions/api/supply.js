@@ -16,14 +16,11 @@ async function fetchSupply() {
     headers: { "content-type": "application/json" },
     body: JSON.stringify(body)
   });
-  if (!res.ok) throw new Error("rpc");
+  if (!res.ok) throw new Error(`rpc:${res.status}`);
   const data = await res.json();
   const value = data && data.result && data.result.value ? data.result.value : null;
-  if (!value) throw new Error("rpc");
+  if (!value) throw new Error("rpc:missing_value");
   const decimals = Number(value.decimals || 0);
-  const amountStr = value.amount;
-  if (!amountStr) throw new Error("rpc");
-  const amountBig = BigInt(String(amountStr));
   const uiAmountString = value.uiAmountString || value.uiAmount || null;
 
   function formatFromBigInt(bigValue, decimalPlaces) {
@@ -36,9 +33,33 @@ async function fetchSupply() {
     return `${isNegative ? "-" : ""}${intPart}.${fracPart}`;
   }
 
-  const totalSupplyStr = uiAmountString ? String(uiAmountString) : formatFromBigInt(amountBig, decimals);
+  function decimalToBigInt(decimalStr) {
+    const cleaned = String(decimalStr).replace(/,/g, "");
+    const [intPart, fracPart = ""] = cleaned.split(".");
+    const digits = `${intPart}${fracPart}`.replace(/^0+(?=\d)/, "") || "0";
+    return { big: BigInt(digits), decimals: fracPart.length };
+  }
+
+  let amountBig = null;
+  if (value.amount) {
+    amountBig = BigInt(String(value.amount));
+  }
+
+  let totalSupplyStr = null;
+  let supply01pctStr = null;
+
+  if (amountBig !== null) {
+    totalSupplyStr = uiAmountString ? String(uiAmountString) : formatFromBigInt(amountBig, decimals);
+    supply01pctStr = formatFromBigInt(amountBig, decimals + 3);
+  } else if (uiAmountString) {
+    const parsed = decimalToBigInt(uiAmountString);
+    totalSupplyStr = String(uiAmountString);
+    supply01pctStr = formatFromBigInt(parsed.big, parsed.decimals + 3);
+  } else {
+    throw new Error("rpc:no_amount");
+  }
+
   const totalSupply = Number(totalSupplyStr);
-  const supply01pctStr = formatFromBigInt(amountBig, decimals + 3);
   const supply01pct = Number(supply01pctStr);
   return { totalSupply, totalSupplyStr, supply01pct, supply01pctStr, decimals };
 }
@@ -65,8 +86,9 @@ export async function onRequestGet() {
     return new Response(JSON.stringify(payload), {
       headers: { "content-type": "application/json", "cache-control": `public, max-age=${CACHE_TTL_SEC}` }
     });
-  } catch (_) {
-    return new Response(JSON.stringify({ ok: false }), {
+  } catch (err) {
+    const message = err && err.message ? err.message : "supply_error";
+    return new Response(JSON.stringify({ ok: false, error: message }), {
       status: 500,
       headers: { "content-type": "application/json" }
     });
