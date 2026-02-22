@@ -198,9 +198,9 @@ function startIntroSequence() {
       intro.remove();
       document.documentElement.classList.remove("intro-active");
       document.documentElement.classList.add("intro-done");
-      const vision = document.getElementById("vision");
-      if (vision) {
-        vision.scrollIntoView({ behavior: "smooth", block: "start" });
+      const prologue = document.getElementById("prologue-section");
+      if (prologue) {
+        prologue.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }, 1200);
   }

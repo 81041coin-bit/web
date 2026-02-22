@@ -443,7 +443,7 @@ nav a:hover {
   line-height: 1.35;
   letter-spacing: 0.03em;
   color: #eaf3ff;
-  text-shadow: 0 12px 26px rgba(0, 0, 0, 0.7), 0 0 26px rgba(0, 0, 0, 0.4) !important;
+  text-shadow: 0 14px 40px rgba(79, 230, 210, 0.15);
 }
 
 .prologue-start .fade-line:nth-child(1) { animation: cinematicLine 3.2s ease forwards; animation-delay: 0s; }
@@ -479,12 +479,13 @@ nav a:hover {
   animation: none;
   display: block;
   margin: 0 auto;
+  visibility: visible;
 }
 
 .prologue-cinematic .prologue-final {
   font-size: clamp(56px, 8vw, 96px);
   color: #ffffff;
-  text-shadow: 0 20px 50px rgba(79, 230, 210, 0.28), 0 12px 30px rgba(0, 0, 0, 0.6) !important;
+  text-shadow: 0 20px 50px rgba(79, 230, 210, 0.28);
 }
 
 
