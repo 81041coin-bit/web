@@ -135,14 +135,18 @@ function buildTradeSteps() {
     /STEP\\s*\\d+/i,
     /【STEP\\s*\\d+】/i,
     /步骤\\s*\\d+/,
+    /第[一二三四五六七八九十]+步/,
     /購入完了後の確認/,
     /よくある質問/,
     /重要な注意事項/,
     /免責事項/,
     /After purchase/i,
     /Purchase complete/i,
+    /After Purchase Confirmation/i,
+    /Frequently Asked Questions/i,
     /FAQ/i,
     /Important/i,
+    /Important Notes/i,
     /Disclaimer/i,
     /Official Links/i,
     /官方链接/,
@@ -198,17 +202,42 @@ function buildTradeSteps() {
 
   const cards = [];
   sections.forEach((section) => {
-    const title = section.title.replace(/━+/g, "").trim();
-    const bodyLines = section.body;
+    const title = section.title
+      .replace(/（見出し）/g, "")
+      .replace(/━+/g, "")
+      .trim();
+    const bodyLines = section.body
+      .map((line) => line.replace(/（見出し）/g, "").trim())
+      .filter((line) => line && !/画像を表示/.test(line));
     const stepMatch = title.match(/(?:STEP|步骤)\\s*(\\d+)/i);
     const stepNum = stepMatch ? stepMatch[1] : null;
     const images = stepNum && imageMap[stepNum] ? imageMap[stepNum] : [];
     const imagesHtml = images.length
       ? `<div class="trade-step-images">${images.map((src) => `<img src="${src}" alt="${title}">`).join("")}</div>`
       : "";
-    const listItems = bodyLines.map((line) => `<li>${line}</li>`).join("");
-    const bodyHtml = `<ul class="step-list">${listItems}</ul>`;
-    cards.push(`<div class="trade-step"><h3>${title}</h3>${bodyHtml}${imagesHtml}</div>`);
+    const listItems = [];
+    let caValue = null;
+    const linkify = (text) =>
+      text.replace(/(https?:\\/\\/[^\\s)]+)/g, (match) =>
+        `<a href="${match}" target="_blank" rel="noopener">${match}</a>`
+      );
+    bodyLines.forEach((line) => {
+      let cleaned = line.replace(/（[^）]*簡単にコピーできる形にして[^）]*）/g, "").trim();
+      const caMatch = cleaned.match(/CA\\s*[:：]\\s*([A-Za-z0-9]+)/);
+      if (caMatch) {
+        caValue = caMatch[1];
+      }
+      cleaned = linkify(cleaned);
+      listItems.push(`<li>${cleaned}</li>`);
+    });
+    const listHtml = `<ul class="step-list">${listItems.join("")}</ul>`;
+    const copyLabel = I18N["howto.copy"] || "Copy";
+    const copyHint = I18N["howto.copyHint"] || "";
+    const caLabel = I18N["howto.caLabel"] || "CA";
+    const copyHtml = caValue
+      ? `<div class="copy-row"><div class="muted">${caLabel}</div><div class="copy-box"><input type="text" readonly value="${caValue}" aria-label="CA" /><button type="button" class="button" data-copy="${caValue}">${copyLabel}</button></div><div class="copy-status">${copyHint}</div></div>`
+      : "";
+    cards.push(`<div class="trade-step"><h3>${title}</h3>${listHtml}${copyHtml}${imagesHtml}</div>`);
   });
 
   const introLines = found.length ? lines.slice(0, found[0].idx) : [];
