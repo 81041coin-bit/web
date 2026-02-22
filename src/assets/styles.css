@@ -74,7 +74,7 @@ body > * {
 }
 
 .intro-light-strong {
-  background: radial-gradient(800px 360px at 50% 15%, rgba(255,255,255,0.55), transparent 60%),
+  background: radial-gradient(900px 420px at 50% 12%, rgba(255,255,255,0.72), transparent 62%),
               #05070b;
 }
 
@@ -93,28 +93,28 @@ body > * {
   object-fit: cover;
   opacity: 0;
   transform: scale(1);
-  transition: opacity 1.2s ease, transform 6s ease;
+  transition: opacity 1.2s ease, transform 10s ease;
   filter: contrast(1.05) saturate(1.05);
 }
 
 .intro-demon.show {
-  opacity: 0.8;
-  transform: scale(0.8);
+  opacity: 0.85;
+  transform: scale(0.92);
 }
 
 .intro-demon.zoom {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1.08);
 }
 
 .intro-heaven.show {
-  opacity: 0.8;
-  transform: scale(0.8);
+  opacity: 0.85;
+  transform: scale(0.92);
 }
 
 .intro-heaven.zoom {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1.08);
 }
 
 .intro.hidden {
@@ -146,6 +146,10 @@ body > * {
 
 .intro-line.fast {
   transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.intro-line.instant {
+  transition: none;
 }
 
 .intro-line.final {
