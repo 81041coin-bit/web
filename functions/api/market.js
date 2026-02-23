@@ -28,16 +28,19 @@ async function fetchHolders(apiKey) {
   if (!apiKey) return null;
   const headers = { "X-API-KEY": apiKey };
   const parseHolder = (data) => {
-    const value = data && data.data
-      ? (data.data.holder ??
-         data.data.holders ??
-         data.data.holderCount ??
-         data.data.holdersCount ??
-         data.data.holder_count ??
-         data.data.holders_count)
+    const bag = data && data.data ? data.data : data;
+    const value = bag
+      ? (bag.holder ??
+         bag.holders ??
+         bag.holderCount ??
+         bag.holdersCount ??
+         bag.holder_count ??
+         bag.holders_count ??
+         bag.holder_number ??
+         bag.holders_number)
       : null;
     if (value === null || value === undefined) return null;
-    const num = Number(value);
+    const num = Number(String(value).replace(/,/g, ""));
     return Number.isFinite(num) ? num : null;
   };
   const overviewUrl = `https://public-api.birdeye.so/defi/token_overview?address=${SOL_MINT}`;
