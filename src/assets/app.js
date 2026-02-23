@@ -84,7 +84,7 @@ function startIntroSequence() {
   const heavenEl = intro.querySelector(".intro-heaven");
 
   const getLine = (n) => I18N[`intro.l${n}`] || missingKey(`intro.l${n}`);
-  const lines = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
+  let lines = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
 
   if (introController && introController.cancel) {
     introController.cancel();
@@ -232,12 +232,12 @@ function startIntroSequence() {
       if (timerId) clearTimeout(timerId);
     },
     updateLang: () => {
-      const updated = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
+      lines = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
       if (currentPrimary && primaryEl.classList.contains("show")) {
-        primaryEl.textContent = updated[currentPrimary - 1] || "";
+        primaryEl.textContent = lines[currentPrimary - 1] || "";
       }
       if (currentSecondary && secondaryEl.classList.contains("show")) {
-        secondaryEl.textContent = updated[currentSecondary - 1] || "";
+        secondaryEl.textContent = lines[currentSecondary - 1] || "";
       }
     }
   };
@@ -269,8 +269,8 @@ function startIntroSequence() {
     if (step.clear) {
       clearLines(step.fade);
     } else {
-      const primaryText = step.primary ? lines[step.primary - 1] : primaryEl.textContent;
-      const secondaryText = step.secondary ? lines[step.secondary - 1] : secondaryEl.textContent;
+      const primaryText = step.primary ? getLine(step.primary) : primaryEl.textContent;
+      const secondaryText = step.secondary ? getLine(step.secondary) : secondaryEl.textContent;
       if (step.primary) {
         currentPrimary = step.primary;
         setLine(primaryEl, primaryText, true, step.fast, step.final);

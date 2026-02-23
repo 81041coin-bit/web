@@ -26,21 +26,32 @@ async function fetchDexScreener() {
 
 async function fetchHolders(apiKey) {
   if (!apiKey) return null;
-  const url = `https://public-api.birdeye.so/defi/token_overview?address=${SOL_MINT}`;
-  const res = await fetch(url, { headers: { "X-API-KEY": apiKey } });
-  if (!res.ok) return null;
-  const data = await res.json();
-  const value = data && data.data
-    ? (data.data.holder ??
-       data.data.holders ??
-       data.data.holderCount ??
-       data.data.holdersCount ??
-       data.data.holder_count ??
-       data.data.holders_count)
-    : null;
-  if (value === null || value === undefined) return null;
-  const num = Number(value);
-  return Number.isFinite(num) ? num : null;
+  const headers = { "X-API-KEY": apiKey };
+  const parseHolder = (data) => {
+    const value = data && data.data
+      ? (data.data.holder ??
+         data.data.holders ??
+         data.data.holderCount ??
+         data.data.holdersCount ??
+         data.data.holder_count ??
+         data.data.holders_count)
+      : null;
+    if (value === null || value === undefined) return null;
+    const num = Number(value);
+    return Number.isFinite(num) ? num : null;
+  };
+  const overviewUrl = `https://public-api.birdeye.so/defi/token_overview?address=${SOL_MINT}`;
+  const overviewRes = await fetch(overviewUrl, { headers });
+  if (overviewRes.ok) {
+    const overviewData = await overviewRes.json();
+    const overviewValue = parseHolder(overviewData);
+    if (overviewValue !== null) return overviewValue;
+  }
+  const securityUrl = `https://public-api.birdeye.so/defi/token_security?address=${SOL_MINT}`;
+  const securityRes = await fetch(securityUrl, { headers });
+  if (!securityRes.ok) return null;
+  const securityData = await securityRes.json();
+  return parseHolder(securityData);
 }
 
 async function fetchDistributionPool() {
