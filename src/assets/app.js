@@ -624,12 +624,10 @@ async function fetchMarket() {
     const data = await res.json();
     if (!data || !data.ok) throw new Error("market");
 
-    const holders = data.market && data.market.holders;
     const trades = data.market && data.market.trades24h;
     const liquidity = data.market && data.market.liquidityUsd;
     const mcap = data.market && data.market.marketCapUsd;
 
-    setText("market-holders", holders !== null ? formatNumber(holders, 0) : null, "market.na");
     setText("market-trades", trades !== null ? formatNumber(trades, 0) : null, "market.na");
     setText("market-liquidity", liquidity !== null ? `$${formatNumber(liquidity, 2)}` : null, "market.na");
     setText("market-cap", mcap !== null ? `$${formatNumber(mcap, 2)}` : null, "market.na");
@@ -682,7 +680,6 @@ async function fetchMarket() {
     }
   } catch (_) {
     if (statusEl) statusEl.textContent = I18N["market.unavailable"] || missingKey("market.unavailable");
-    setText("market-holders", null, "market.na");
     setText("market-trades", null, "market.na");
     setText("market-liquidity", null, "market.na");
     setText("market-cap", null, "market.na");
