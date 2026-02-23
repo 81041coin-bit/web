@@ -1055,3 +1055,39 @@ footer {
   nav { gap: 10px; }
   .header-inner { flex-direction: column; align-items: flex-start; }
 }
+
+@media (max-width: 720px) {
+  .intro-lines { gap: 10px; }
+  .intro-line { font-size: clamp(20px, 6.2vw, 36px); }
+  .intro-line.final { font-size: clamp(36px, 10vw, 64px); }
+  .intro-skip {
+    right: 16px;
+    bottom: 16px;
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .prologue-cinematic {
+    min-height: 240px;
+    padding: 12px 0;
+  }
+  .prologue-show-all .fade-line {
+    font-size: clamp(14px, 4.4vw, 20px);
+  }
+  .prologue-show-all .prologue-final {
+    font-size: clamp(28px, 9vw, 52px);
+  }
+}
+
+@media (max-width: 720px) {
+  .trade-steps { gap: 12px; }
+  .trade-step { padding: 14px; }
+  .trade-step h3 { font-size: 24px; }
+  .step-list { font-size: 16px; }
+  .trade-step-images img {
+    width: 100%;
+    max-width: 100%;
+  }
+  .copy-box input {
+    flex-basis: 100%;
+  }
+}
