@@ -47,7 +47,7 @@
   "market.na": "—",
   "market.note": "データ提供：{SOURCE} / 更新：{INTERVAL}秒ごと / 時価総額：{TYPE}",
   "howto.cta": "購入方法はこちら",
-  "howto.button": "取引ガイドへ",
+  "howto.button": "取引の仕方を見る",
   "pool.title": "分配金プール",
   "pool.desc": "運営の持つ全ての81041coinをプロジェクト達成時にコイン保有者へ還元!!",
   "pool.amount": "現在残高（81041）：{AMOUNT}",
@@ -229,5 +229,6 @@
   "results.detail.use.title": "寄付金の使途について",
   "results.detail.use.lead": "今回の寄付金は、以下の活動に活用される予定です。",
   "results.detail.use.items": "<li>法人の運営基盤の強化</li><li>広報・啓発活動の推進</li><li>犯罪被害相談員の育成および支援体制の充実</li>",
-  "results.detail.use.note": "犯罪被害者支援は、継続的な体制づくりと人材育成が不可欠な分野です。本寄付が、必要な支援が必要な人に届く仕組みづくりの一助となることを願っています。"
+  "results.detail.use.note": "犯罪被害者支援は、継続的な体制づくりと人材育成が不可欠な分野です。本寄付が、必要な支援が必要な人に届く仕組みづくりの一助となることを願っています。",
+  "howto.buyNow": "今すぐ取引をする"
 }

@@ -47,7 +47,7 @@
   "market.na": "—",
   "market.note": "数据来源：{SOURCE} / 每{INTERVAL}秒更新 / 市值：{TYPE}",
   "howto.cta": "购买方式",
-  "howto.button": "前往交易指南",
+  "howto.button": "查看交易方法",
   "pool.title": "分配资金池",
   "pool.desc": "运营方持有的全部81041coin将在项目达成时分配给持币者!!",
   "pool.amount": "当前余额（81041）：{AMOUNT}",
@@ -231,5 +231,6 @@
   "results.detail.use.title": "捐赠资金用途",
   "results.detail.use.lead": "本次捐赠资金计划用于以下方面：",
   "results.detail.use.items": "<li>加强机构运营基础</li><li>推进宣传与社会启发活动</li><li>培养犯罪受害者咨询员并完善支援体系</li>",
-  "results.detail.use.note": "对犯罪受害者的支援需要持续的组织建设与人才培养。我们希望本次捐赠能够帮助构建一个让有需要的人及时获得支援的社会机制。"
+  "results.detail.use.note": "对犯罪受害者的支援需要持续的组织建设与人才培养。我们希望本次捐赠能够帮助构建一个让有需要的人及时获得支援的社会机制。",
+  "howto.buyNow": "立即交易"
 }
