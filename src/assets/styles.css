@@ -27,6 +27,7 @@ html, body {
   font-family: "Space Grotesk", "Sora", "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   font-size: 18px;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 body::before {
@@ -463,6 +464,11 @@ nav a:hover {
   text-shadow: 0 14px 40px rgba(79, 230, 210, 0.15);
 }
 
+html.intro-active header {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .prologue-start .fade-line:nth-child(1) { animation: cinematicLine 3.2s ease forwards; animation-delay: 0s; }
 .prologue-start .fade-line:nth-child(2) { animation: cinematicLine 3.2s ease forwards; animation-delay: 2.8s; }
 .prologue-start .fade-line:nth-child(3) { animation: cinematicLine 3.2s ease forwards; animation-delay: 5.6s; }
@@ -774,6 +780,8 @@ pre.mermaid {
   color: var(--muted);
   font-size: 17px;
   line-height: 1.7;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .step-list {
@@ -787,6 +795,8 @@ pre.mermaid {
 
 .step-list li {
   margin: 6px 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .trade-step-images {
