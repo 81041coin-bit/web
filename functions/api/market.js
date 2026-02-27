@@ -57,19 +57,19 @@ async function fetchHolders(apiKey) {
   return parseHolder(securityData);
 }
 
-async function fetchDistributionPool() {
+async function fetchDistributionPool(rpcUrl) {
   const body = {
     jsonrpc: "2.0",
     id: 1,
     method: "getTokenAccountsByOwner",
     params: [DISTRIBUTION_WALLET, { mint: SOL_MINT }, { encoding: "jsonParsed" }]
   };
-  const res = await fetch(SOLANA_RPC, {
+  const res = await fetch(rpcUrl, {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify(body)
   });
-  if (!res.ok) return null;
+  if (!res.ok) return { amount: null };
   const data = await res.json();
   const accounts = data && data.result && data.result.value ? data.result.value : [];
   if (!accounts.length) return { amount: 0 };
@@ -87,10 +87,11 @@ export async function onRequestGet({ env }) {
   }
   try {
     const apiKey = env && env.BIRDEYE_API_KEY ? env.BIRDEYE_API_KEY : null;
+    const rpcUrl = env && env.SOLANA_RPC ? env.SOLANA_RPC : SOLANA_RPC;
     const [dex, holders, pool] = await Promise.all([
       fetchDexScreener(),
       fetchHolders(apiKey),
-      fetchDistributionPool()
+      fetchDistributionPool(rpcUrl)
     ]);
 
     const payload = {
@@ -105,11 +106,13 @@ export async function onRequestGet({ env }) {
         liquidityUsd: dex ? dex.liquidityUsd : null,
         marketCapUsd: dex ? dex.marketCapUsd : null
       },
-      distributionPool: pool ? {
-        amount: pool.amount,
-        amountUsd: dex && dex.priceUsd ? pool.amount * dex.priceUsd : null,
+      distributionPool: {
+        amount: pool && pool.amount !== undefined ? pool.amount : null,
+        amountUsd: (pool && pool.amount !== null && pool.amount !== undefined && dex && dex.priceUsd)
+          ? pool.amount * dex.priceUsd
+          : null,
         updatedAt: new Date().toISOString()
-      } : null
+      }
     };
 
     cache = { ts: now, data: payload };
