@@ -959,6 +959,16 @@ pre.mermaid {
   font-size: 14px;
 }
 
+.coef-equation {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.coef-axis {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .distribution-flow img {
   width: 100%;
   height: auto;
