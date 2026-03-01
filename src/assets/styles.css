@@ -427,6 +427,13 @@ nav a:hover {
   position: relative;
 }
 
+.prologue-hidden {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .prologue-cinematic::before {
   content: "";
   position: absolute;

@@ -67,6 +67,11 @@ function applyI18n() {
 function startPrologue() {
   const prologue = document.querySelector(".prologue-cinematic");
   if (!prologue) return;
+  const intro = document.getElementById("intro");
+  if (intro) {
+    prologue.classList.add("prologue-hidden");
+    return;
+  }
   prologue.classList.remove("prologue-start");
   // Restart animation on language change
   void prologue.offsetWidth;
@@ -213,6 +218,8 @@ function startIntroSequence() {
       document.documentElement.classList.add("intro-done");
       const prologue = document.getElementById("prologue-section");
       if (prologue) {
+        prologue.classList.remove("prologue-hidden");
+        prologue.classList.remove("prologue-start");
         prologue.classList.add("prologue-show-all");
         prologue.scrollIntoView({ behavior: "smooth", block: "center" });
       }
