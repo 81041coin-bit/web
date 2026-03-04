@@ -1121,5 +1121,17 @@ footer {
   }
   .pool-value {
     font-size: clamp(22px, 6vw, 32px);
+    line-height: 1.2;
+  }
+  .pool-table {
+    padding: 12px;
+    gap: 10px;
+  }
+  .pool-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .pool-label {
+    font-size: 13px;
   }
 }
