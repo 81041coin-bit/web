@@ -97,26 +97,15 @@ function startIntroSequence() {
     introController.cancel();
   }
 
-  if (introAudio) {
-    introAudio.currentTime = 0;
-    introAudio.volume = 0.75;
-    introAudio.play().catch(() => {});
-  }
-
-  if (introAudioBtn && introAudio) {
-    introAudioBtn.addEventListener("click", () => {
-      if (introAudio.paused) {
-        introAudio.play().catch(() => {});
-      } else {
-        introAudio.pause();
-      }
-    });
-  }
-
   document.documentElement.classList.add("intro-active");
   let timerId = null;
   let cancelled = false;
   const skipBtn = intro.querySelector(".intro-skip");
+  const requiresTapStart = (typeof window !== "undefined") && (
+    ("ontouchstart" in window) ||
+    (navigator.maxTouchPoints && navigator.maxTouchPoints > 0)
+  );
+  let hasStarted = false;
   let currentPrimary = null;
   let currentSecondary = null;
 
@@ -258,6 +247,7 @@ function startIntroSequence() {
   introController = {
     cancel: () => {
       cancelled = true;
+      hasStarted = false;
       if (timerId) clearTimeout(timerId);
       if (introAudio) {
         introAudio.pause();
@@ -277,7 +267,7 @@ function startIntroSequence() {
 
   let idx = 0;
   function nextStep() {
-    if (cancelled) return;
+    if (cancelled || !hasStarted) return;
     const step = steps[idx];
     if (!step) return finishIntro();
 
@@ -318,7 +308,31 @@ function startIntroSequence() {
     timerId = setTimeout(nextStep, step.hold || 1600);
   }
 
-  nextStep();
+  function playIntroAudio() {
+    if (!introAudio) return Promise.resolve();
+    introAudio.currentTime = 0;
+    introAudio.volume = 0.75;
+    return introAudio.play().catch(() => {});
+  }
+
+  function beginSequence() {
+    if (hasStarted || cancelled) return;
+    hasStarted = true;
+    if (introAudioBtn) introAudioBtn.classList.add("hidden");
+    playIntroAudio();
+    nextStep();
+  }
+
+  if (requiresTapStart) {
+    if (introAudioBtn) {
+      introAudioBtn.classList.remove("hidden");
+      introAudioBtn.addEventListener("click", beginSequence, { once: true });
+    } else {
+      intro.addEventListener("click", beginSequence, { once: true });
+    }
+  } else {
+    beginSequence();
+  }
 }
 
 function buildTradeSteps() {
