@@ -81,6 +81,7 @@ function startPrologue() {
 function startIntroSequence() {
   const intro = document.getElementById("intro");
   if (!intro) return;
+  const introAudio = intro.querySelector("#intro-audio");
   const primaryEl = intro.querySelector(".intro-line.primary");
   const secondaryEl = intro.querySelector(".intro-line.secondary");
   if (!primaryEl || !secondaryEl) return;
@@ -93,6 +94,12 @@ function startIntroSequence() {
 
   if (introController && introController.cancel) {
     introController.cancel();
+  }
+
+  if (introAudio) {
+    introAudio.currentTime = 0;
+    introAudio.volume = 0.75;
+    introAudio.play().catch(() => {});
   }
 
   document.documentElement.classList.add("intro-active");
@@ -210,6 +217,10 @@ function startIntroSequence() {
   }
 
   function finishIntro() {
+    if (introAudio) {
+      introAudio.pause();
+      introAudio.currentTime = 0;
+    }
     intro.classList.add("hidden");
     if (timerId) clearTimeout(timerId);
     setTimeout(() => {
@@ -237,6 +248,10 @@ function startIntroSequence() {
     cancel: () => {
       cancelled = true;
       if (timerId) clearTimeout(timerId);
+      if (introAudio) {
+        introAudio.pause();
+        introAudio.currentTime = 0;
+      }
     },
     updateLang: () => {
       lines = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
