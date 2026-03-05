@@ -100,18 +100,16 @@ function startIntroSequence() {
   if (introAudio) {
     introAudio.currentTime = 0;
     introAudio.volume = 0.75;
-    introAudio.play().then(() => {
-      if (introAudioBtn) introAudioBtn.classList.add("hidden");
-    }).catch(() => {
-      if (introAudioBtn) introAudioBtn.classList.remove("hidden");
-    });
+    introAudio.play().catch(() => {});
   }
 
   if (introAudioBtn && introAudio) {
     introAudioBtn.addEventListener("click", () => {
-      introAudio.play().then(() => {
-        introAudioBtn.classList.add("hidden");
-      }).catch(() => {});
+      if (introAudio.paused) {
+        introAudio.play().catch(() => {});
+      } else {
+        introAudio.pause();
+      }
     });
   }
 
