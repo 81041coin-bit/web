@@ -204,6 +204,29 @@ body > * {
   backdrop-filter: blur(6px);
 }
 
+.intro-audio-btn {
+  position: absolute;
+  right: 24px;
+  bottom: 68px;
+  z-index: 3;
+  background: rgba(15, 26, 38, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #f2f6ff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+.intro-audio-btn.hidden {
+  display: none;
+}
+
+.intro-audio-btn:hover {
+  border-color: rgba(79, 230, 210, 0.6);
+}
+
 .intro-skip:hover {
   border-color: rgba(79, 230, 210, 0.6);
 }
@@ -1092,6 +1115,12 @@ footer {
   .intro-skip {
     right: 16px;
     bottom: 16px;
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+  .intro-audio-btn {
+    right: 16px;
+    bottom: 52px;
     font-size: 12px;
     padding: 6px 10px;
   }

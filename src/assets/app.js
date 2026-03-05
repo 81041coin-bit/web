@@ -82,6 +82,7 @@ function startIntroSequence() {
   const intro = document.getElementById("intro");
   if (!intro) return;
   const introAudio = intro.querySelector("#intro-audio");
+  const introAudioBtn = intro.querySelector(".intro-audio-btn");
   const primaryEl = intro.querySelector(".intro-line.primary");
   const secondaryEl = intro.querySelector(".intro-line.secondary");
   if (!primaryEl || !secondaryEl) return;
@@ -99,7 +100,19 @@ function startIntroSequence() {
   if (introAudio) {
     introAudio.currentTime = 0;
     introAudio.volume = 0.75;
-    introAudio.play().catch(() => {});
+    introAudio.play().then(() => {
+      if (introAudioBtn) introAudioBtn.classList.add("hidden");
+    }).catch(() => {
+      if (introAudioBtn) introAudioBtn.classList.remove("hidden");
+    });
+  }
+
+  if (introAudioBtn && introAudio) {
+    introAudioBtn.addEventListener("click", () => {
+      introAudio.play().then(() => {
+        introAudioBtn.classList.add("hidden");
+      }).catch(() => {});
+    });
   }
 
   document.documentElement.classList.add("intro-active");
