@@ -81,8 +81,6 @@ function startPrologue() {
 function startIntroSequence() {
   const intro = document.getElementById("intro");
   if (!intro) return;
-  const introAudio = intro.querySelector("#intro-audio");
-  const introAudioBtn = intro.querySelector(".intro-audio-btn");
   const primaryEl = intro.querySelector(".intro-line.primary");
   const secondaryEl = intro.querySelector(".intro-line.secondary");
   if (!primaryEl || !secondaryEl) return;
@@ -101,11 +99,6 @@ function startIntroSequence() {
   let timerId = null;
   let cancelled = false;
   const skipBtn = intro.querySelector(".intro-skip");
-  const requiresTapStart = (typeof window !== "undefined") && (
-    ("ontouchstart" in window) ||
-    (navigator.maxTouchPoints && navigator.maxTouchPoints > 0)
-  );
-  let hasStarted = false;
   let currentPrimary = null;
   let currentSecondary = null;
 
@@ -217,10 +210,6 @@ function startIntroSequence() {
   }
 
   function finishIntro() {
-    if (introAudio) {
-      introAudio.pause();
-      introAudio.currentTime = 0;
-    }
     intro.classList.add("hidden");
     if (timerId) clearTimeout(timerId);
     setTimeout(() => {
@@ -247,12 +236,7 @@ function startIntroSequence() {
   introController = {
     cancel: () => {
       cancelled = true;
-      hasStarted = false;
       if (timerId) clearTimeout(timerId);
-      if (introAudio) {
-        introAudio.pause();
-        introAudio.currentTime = 0;
-      }
     },
     updateLang: () => {
       lines = Array.from({ length: 18 }, (_, i) => getLine(i + 1));
@@ -267,7 +251,7 @@ function startIntroSequence() {
 
   let idx = 0;
   function nextStep() {
-    if (cancelled || !hasStarted) return;
+    if (cancelled) return;
     const step = steps[idx];
     if (!step) return finishIntro();
 
@@ -308,31 +292,7 @@ function startIntroSequence() {
     timerId = setTimeout(nextStep, step.hold || 1600);
   }
 
-  function playIntroAudio() {
-    if (!introAudio) return Promise.resolve();
-    introAudio.currentTime = 0;
-    introAudio.volume = 0.75;
-    return introAudio.play().catch(() => {});
-  }
-
-  function beginSequence() {
-    if (hasStarted || cancelled) return;
-    hasStarted = true;
-    if (introAudioBtn) introAudioBtn.classList.add("hidden");
-    playIntroAudio();
-    nextStep();
-  }
-
-  if (requiresTapStart) {
-    if (introAudioBtn) {
-      introAudioBtn.classList.remove("hidden");
-      introAudioBtn.addEventListener("click", beginSequence, { once: true });
-    } else {
-      intro.addEventListener("click", beginSequence, { once: true });
-    }
-  } else {
-    beginSequence();
-  }
+  nextStep();
 }
 
 function buildTradeSteps() {
